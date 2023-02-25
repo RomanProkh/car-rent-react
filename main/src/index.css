@@ -1,0 +1,415 @@
+:root {
+  /* Background colors */
+  --green: #5AC41C;
+  --dark-green: #418F14;
+  --red: #CA3C25;
+  --dark: #0D3B66;
+  --light-grey:#DCDCDC;
+
+  /* text-colors */
+  --dark-text: #394053;
+  --dark-blue-text: #191f2a;
+  --dark-light-text: #1d3557;
+  --gray-text: #fcfcfc;
+  --light-border: #fcfcfc;
+  --light-heading: #fcfcfc;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+h2 {
+  margin: 0;
+  padding-bottom: 20px;
+}
+
+nav {
+  margin: 0;
+  padding: 20px 0px;
+  background-color: var(--green);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+nav a{
+  font-weight: bold;
+  color: #fafafa;
+  text-decoration: none;
+  border-right: solid 1px var(--dark-green);
+  padding: 1em 0.4em;
+}
+
+nav a.router-link-exact-active {
+  background: var(--red);
+}
+
+
+#pageTitle {
+  font-size: 2.5em;
+  color: #fafafa;
+}
+#pageMenu {
+  font-size: 1.5em;
+  float: right;
+  padding-right: 1%;
+  padding-top: inherit;
+}
+
+#logo{
+  margin-right: 1%;
+  width: fit-content;
+}
+
+#logo img{
+  float: left;
+  width: 100px;
+  height: 100%;
+}
+
+#logo a{
+  text-decoration: none;
+  padding: 0;
+  border: unset;
+}
+
+#afterNavImage{
+}
+
+#afterNavImage img{
+  display: block;
+  width: 100%;
+}
+
+footer {
+  background: var(--green);
+  color: white;
+  padding: 20px;
+  bottom: 0;
+  min-height: 400px;
+}
+
+footer h1 {
+  border-bottom: 1px dashed var(--light-border);
+  width: 100%;
+  text-align: left;
+}
+
+footer h2 {
+  padding-bottom: 0;
+}
+
+.footer-container {
+  position: static;
+  bottom: 0;
+  left: 0;
+  justify-content: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  display: flex;
+  padding: 2em;
+  margin: 0 auto;
+  height: auto;
+  width: 100%;
+  background-color: var(--green);
+}
+
+.footer-heading a {
+  margin-top: 4%;
+  color: var(--dark-text);
+  text-decoration: none;
+}
+
+.footer-heading a:hover {
+  color: #f2f2f2;
+}
+
+.footer-heading {
+  display: flex;
+  flex-direction: column;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.footer-heading h2 {
+  border-bottom: 2px solid var(--light-heading);
+  margin-bottom: 4%;
+}
+
+.copyright {
+  text-align: center;
+  font-style: italic;
+  color: var(--dark-text);
+}
+
+/*OrderNav.vue (scoped)*/
+#navContainer{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  border: solid 3px var(--dark-green);
+  margin: 10px 10px;
+}
+.navStepContainer{
+  margin: 0.5%;
+  padding: 1% 2%;
+  text-align: left;
+}
+.navStepInfo{
+  padding: 0px 20px;
+}
+/*SearchForm.vue (scoped)*/
+
+#searchFormContainer{
+  margin: 0;
+  padding: 20px 0;
+  background-color: #ccc;
+
+}
+
+form{
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.formRow{
+  display:flex;
+  flex-wrap: wrap;
+
+}
+
+.formColumn{
+  width: 50%;
+  padding: 0;
+}
+
+* {box-sizing: border-box;}
+
+label {
+  float: left;
+}
+
+input[type=date]{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit]{
+  margin: 0 auto;
+}
+
+select{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: var(--green);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: var(--green);
+}
+
+/*CarResultsView.vue*/
+#carList {
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+  width: 80%;
+}
+.card {
+  margin-bottom: 3%;
+  background-color: var(--light-grey);
+}
+figcaption {
+  font-weight: 700;
+  font-size:1.3rem;
+}
+.card button {
+  width: 100%;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 500;
+  background-color: var(--dark);
+}
+.card button:hover {
+  cursor: pointer;
+  background-color: var(--dark-blue-text);
+}
+#carList img {
+  height: 250px;
+  width: 315px;
+}
+
+#carList ul{
+  list-style: none;
+  margin: 0.5% auto;
+  padding: 0;
+}
+
+#carList ul li{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*OrderView.vue (scoped)*/
+
+#vehicleInfoContainer {
+  margin: 0 auto;
+  padding: 5% 0px;
+}
+.orderFormTxt {
+  width: 48%;
+  border-radius: 5px;
+  outline: none;
+  margin-bottom: 3%;
+  padding: 2%;
+  margin-right: 1%;
+  margin-left: 1%;
+  font-size: 14px;
+}
+#orderInfoContainer{
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 2%;
+}
+#orderInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: auto;
+  margin-right: 3%;
+}
+#orderInfo h4{
+  align-self: center;
+}
+#customerInfo{
+  display: flex;
+  flex-direction: column;
+  align-items:flex-start;
+  justify-content:center;
+  margin-right: auto;
+  margin-left: 3%;
+}
+#customerInfo h4{
+  align-self: center;
+}
+.orderFormLarge {
+  width: 98%;
+  border-radius: 5px;
+  outline: none;
+  margin-bottom: 3%;
+  padding: 2%;
+  font-size: 14px;
+}
+.orderFormTxtField{
+  width: 100%;
+  height: 160px;
+  border-radius: 5px;
+  margin-bottom: 3%;
+  padding: 2%;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+#orderFormContainer {
+  height: auto;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5%;
+  padding: 5%;
+}
+
+#orderViewContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.vehicleImageContainer {
+  width: 50%;
+  max-width: 500px;
+}
+
+.vehicleDataContainer h2{
+  margin: 0;
+  padding: 0;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  display: block;
+  margin: auto;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  width: 50%;
+}
+
+label {
+  float: left;
+}
+
+input[type=submit] {
+  background-color: var(--green);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 3%;
+}
+
+input[type=submit]:hover {
+  background-color: var(--dark-green);
+}
+
+button {
+  background-color: var(--green);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 3% 0;
+}
+button:hover{
+  background-color: var(--dark-green);
+}
+
+.order-nav{
+  background-color: var(--green);
+  color: white;
+}
