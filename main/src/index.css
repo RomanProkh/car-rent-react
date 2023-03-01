@@ -178,6 +178,7 @@ footer h2 {
 form{
   margin: 0 auto;
   max-width: 600px;
+  display: grid;
 }
 
 .formRow{

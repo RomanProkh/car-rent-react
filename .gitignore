@@ -1,0 +1,5 @@
+/.idea/vcs.xml
+/.idea/workspace.xml
+/api/package-lock.json
+/api/node_modules/
+/main/node_modules/

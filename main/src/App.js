@@ -6,9 +6,7 @@ import {
 
 import Home from "./components/Home";
 import OrderNav from "./components/NavBar";
-
-
-
+import ContactUs from "./components/ContactUs";
 
 
 const App = () => {
@@ -21,17 +19,23 @@ const App = () => {
             <Router>
                 <div>
                     <nav>
-                    <Link to="/">Pääsivu</Link>
+                        <Link to="/">Pääsivu</Link>
+                    </nav>
+                    <nav>
+                        <Link to="ContactUs">Ota yhteyttä </Link>
                     </nav>
                 </div>
-                {displayNav && <OrderNav />}
+                {displayNav && <OrderNav/>}
                 <Switch>
+                    {/*
                     <Route path="/">
-                        <Home />
+                        <Home/>
                     </Route>
-
+                    */}
+                    <Route path="/ContactUS">
+                        <ContactUs/>
+                    </Route>
                 </Switch>
-
                 <div>
                     <i>Esimerkkivalikko </i>
                     <i>perustuu HY:n fullstackopen-kurssimateriaaliin</i>
