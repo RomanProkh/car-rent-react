@@ -7,6 +7,7 @@ import {
 import Home from "./components/Home";
 import OrderNav from "./components/NavBar";
 import ContactUs from "./components/ContactUs";
+import SearchForm from "./components/SearchForm";
 
 
 const App = () => {
@@ -19,20 +20,17 @@ const App = () => {
             <Router>
                 <div>
                     <nav>
-                        <Link to="/">Pääsivu</Link>
-                    </nav>
-                    <nav>
+
+                        <Link to="/">Home</Link>
                         <Link to="ContactUs">Ota yhteyttä </Link>
                     </nav>
                 </div>
                 {displayNav && <OrderNav/>}
                 <Switch>
-                    {/*
-                    <Route path="/">
+                    <Route exact path="/">
                         <Home/>
                     </Route>
-                    */}
-                    <Route path="/ContactUS">
+                    <Route exact path="/ContactUS">
                         <ContactUs/>
                     </Route>
                 </Switch>
