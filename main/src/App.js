@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import {
     BrowserRouter as Router,
-    Switch, Route, Link
+    Switch, Route, Link, NavLink
 } from 'react-router-dom'
 
 import Home from "./components/Home";
 import OrderNav from "./components/NavBar";
 import ContactUs from "./components/ContactUs";
 import SearchForm from "./components/SearchForm";
+import {NavbarBrand} from "react-bootstrap";
 
 
 const App = () => {
@@ -20,14 +21,26 @@ const App = () => {
             <Router>
                 <div>
                     <nav>
-
-                        <Link to="/">Home</Link>
-                        <Link to="ContactUs">Ota yhteyttä </Link>
+                        <NavbarBrand>
+                            <img src={require('./logo.png')} id="logo"/>
+                        </NavbarBrand>
+                        <div>
+                            <NavLink to="Home"
+                            >Home</NavLink>
+                            <NavLink to="ContactUs"
+                            >Ota yhteyttä </NavLink>
+                        </div>
+                        <div>
+                            <NavLink to="/SignIn"
+                            >Sign In</NavLink>
+                            <NavLink to="/SignUP"
+                            >Sign Up</NavLink>
+                        </div>
                     </nav>
                 </div>
                 {displayNav && <OrderNav/>}
                 <Switch>
-                    <Route exact path="/">
+                    <Route exact path="/Home">
                         <Home/>
                     </Route>
                     <Route exact path="/ContactUS">
