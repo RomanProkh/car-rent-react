@@ -168,7 +168,7 @@ const SearchForm = () => {
                         <Form.Group className="mb-3" controlId="formBasicVehicleType">
                             <Form.Label>Ajoneuvon tyyppi:</Form.Label>
                             <Form.Control as="select"
-                                          name="vehicleType"
+                                          name="type"
                                           onChange = {handleChange}
                                           onBlur = {handleBlur}
                                           isValid = {!errors.vehicleType}

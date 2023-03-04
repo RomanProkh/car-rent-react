@@ -1,58 +1,43 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState} from 'react'
 import {
     BrowserRouter as Router,
-    Switch, Route, Link, NavLink
+    Switch, Route, Link
 } from 'react-router-dom'
 
 import Home from "./components/Home";
-import OrderNav from "./components/NavBar";
+import OrderNav from "./components/OrderNav";
 import ContactUs from "./components/ContactUs";
-import SearchForm from "./components/SearchForm";
-import {NavbarBrand} from "react-bootstrap";
-import Footer from "./components/Footer";
+import CarResults from "./components/CarResults";
+
+import{useDispatch, useSelector} from 'react-redux';
+import {selectDisplayOrderNav} from "./store/order";
 
 const App = () => {
-
-    // Show orderNavigator
-    let displayNav = false
+    const displayNav = useSelector(selectDisplayOrderNav)
 
     return (
         <div className="container">
             <Router>
                 <div>
                     <nav>
-                        <NavbarBrand>
-                            <img src={require('./logo_black.png')} id="logo"/>
-                        </NavbarBrand>
-                        <div>
-                            <NavLink to="Home"
-                            >Home</NavLink>
-                            <NavLink to="ContactUs"
-                            >Ota yhteyttä </NavLink>
-                        </div>
-                        <div>
-                            <NavLink to="/SignIn"
-                            >Sign In</NavLink>
-                            <NavLink to="/SignUP"
-                            >Sign Up</NavLink>
-                        </div>
+                        <Link to="/">Home</Link>
+                        <Link to="ContactUs">Ota yhteyttä </Link>
                     </nav>
+                    {displayNav && <OrderNav/>}
                 </div>
-                {displayNav && <OrderNav/>}
+
                 <Switch>
-                    <Route exact path="/Home">
+                    <Route exact path="/">
                         <Home/>
                     </Route>
                     <Route exact path="/ContactUS">
                         <ContactUs/>
                     </Route>
+                    <Route exact path="/car-results/">
+                        <CarResults/>
+                    </Route>
                 </Switch>
-                <div>
-                    <i>Esimerkkivalikko </i>
-                    <i>perustuu HY:n fullstackopen-kurssimateriaaliin</i>
-                </div>
             </Router>
-            <Footer/>
         </div>
     )
 }
