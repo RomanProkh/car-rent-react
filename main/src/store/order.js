@@ -9,10 +9,13 @@ const slice = createSlice({
         displayOrderNav: false,
         orderParams: {
             orderStep: 1,
+            orderStart: '',
+            orderEnd: '',
             orderStartDate: '',
             orderEndDate: '',
             orderStartTime: '',
             orderEndTime: '',
+            orderVehicleId: '',
             orderVehicleType: '',
             orderVehicleModel: '',
             orderFirstName: '',
@@ -28,6 +31,12 @@ const slice = createSlice({
         setOrderStep: (state, action) =>{
             state.orderParams.orderStep = action.payload;
         },
+        setOrderStart: (state, action) =>{
+            state.orderParams.orderStart = action.payload;
+        },
+        setOrderEnd: (state, action) =>{
+            state.orderParams.orderEnd = action.payload;
+        },
         setOrderStartDate: (state, action) =>{
             state.orderParams.orderStartDate = action.payload;
         },
@@ -39,6 +48,9 @@ const slice = createSlice({
         },
         setOrderEndTime: (state, action) =>{
             state.orderParams.orderEndTime = action.payload;
+        },
+        setOrderVehicleId: (state, action) =>{
+            state.orderParams.orderVehicleId = action.payload;
         },
         setOrderVehicleType: (state, action) =>{
             state.orderParams.orderVehicleType = action.payload;
@@ -62,10 +74,13 @@ const slice = createSlice({
 // Setters
 export const { setDisplayOrderNav } = slice.actions
 export const { setOrderStep } = slice.actions
+export const { setOrderStart } = slice.actions
+export const { setOrderEnd } = slice.actions
 export const { setOrderStartDate } = slice.actions
 export const { setOrderEndDate } = slice.actions
 export const { setOrderStartTime } = slice.actions
 export const { setOrderEndTime } = slice.actions
+export const { setOrderVehicleId } = slice.actions
 export const { setOrderVehicleType } = slice.actions
 export const { setOrderVehicleModel } = slice.actions
 export const { setOrderFirstName } = slice.actions
