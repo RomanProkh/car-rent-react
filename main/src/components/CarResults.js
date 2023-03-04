@@ -10,13 +10,14 @@ import {
     setOrderVehicleId,
     setOrderStart,
     setOrderEnd,
-    setOrderStep, setOrderStartDate, setOrderEndDate, setOrderStartTime, setOrderEndTime
+    setOrderStep, setOrderStartDate, setOrderEndDate, setOrderStartTime, setOrderEndTime, selectOrderParams
 } from "../store/order";
 import {useDispatch, useSelector} from "react-redux";
 const CarResults = () => {
 
     // Application state getter
     const displayNav = useSelector(selectDisplayOrderNav)
+    const orderParams = useSelector(selectOrderParams)
 
 
     // Url query parameters
@@ -40,14 +41,18 @@ const CarResults = () => {
 
         // Saving parameters into store
         //this.checkDates();
-        store.dispatch(setOrderStart(query.orderStart))
-        store.dispatch(setOrderEnd(query.orderEnd))
-        store.dispatch(setOrderStartDate(orderStart.getDate() + "-" + (orderStart.getMonth()+1) + "-" + orderStart.getFullYear()))
-        store.dispatch(setOrderEndDate(orderEnd.getDate() + "-" + (orderEnd.getMonth()+1) + "-" + orderEnd.getFullYear()))
+        store.dispatch(setOrderStart(orderStart.toString()))
+        store.dispatch(setOrderEnd(orderEnd.toString()))
+        store.dispatch(setOrderStartDate(query.orderStartDate))
+        store.dispatch(setOrderEndDate(query.orderEndDate))
         store.dispatch(setOrderStartTime(query.orderStartTime))
         store.dispatch(setOrderEndTime(query.orderEndTime))
 
+        store.dispatch(setDisplayOrderNav(true))
+        store.dispatch(setOrderStep(1))
+
         // Fetching vehicle list data
+        const vehicleData = async () =>{
         axios
             .get("/api/cars?from=" + query.orderStartDate + "&to=" + query.orderEndDate + "&type="  + query.type)
             .then((res) => {
@@ -56,6 +61,8 @@ const CarResults = () => {
                 // this.orderEndTime = end
             })
             .catch((err) => console.log(err));
+        }
+        vehicleData().catch(console.error)
     }, [query.orderStart, query.orderEnd, query.type]);
 
 
@@ -89,17 +96,18 @@ const CarResults = () => {
     // Method starts order process
     const makeOrder = (vehicleId) =>{
 
-
         // Saving order parameters into application store
         store.dispatch(setDisplayOrderNav(true));
         store.dispatch(setOrderStep(1));
         store.dispatch(setOrderVehicleId(vehicleId))
 
-        // history.push('order' + '?displayOrderNav=true&orderStartDate=' + this.$store.state.order.orderStartDate
-        //     + '&orderEndDate=' + this.store.state.order.orderEndDate
-        //     + '&orderStartTime=' + this.store.state.order.orderStartTime
-        //     + '&orderEndTime=' + this.store.state.order.orderEndTime
-        //     + '&vehicleId=' + vehicleId + '&orderStep=3');
+
+
+        history.push('/order' + '?displayOrderNav=true&orderStartDate=' + orderParams.orderStartDate
+            + '&orderEndDate=' + orderParams.orderEndDate
+            + '&orderStartTime=' + orderParams.orderStartTime
+            + '&orderEndTime=' + orderParams.orderEndTime
+            + '&vehicleId=' + vehicleId + '&orderStep=2');
         return true;
     }
 

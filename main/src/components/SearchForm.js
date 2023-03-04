@@ -12,6 +12,7 @@ const SearchForm = () => {
     const [validated, setValidated] = useState(false);
 
 
+
     // let [formErrors, setFormErrors] = useState({
     //     missingOrderStartDate: '',
     //     missingOrderStartTime: '',
@@ -142,13 +143,11 @@ const SearchForm = () => {
                 validationSchema={schema}
 
                 initialValues={{
-                    username: '',
-                    email: '',
-                    password: ''
+
                 }}
                 onSubmit={(values, { setSubmitting , resetForm}) => {
 
-                    console.log(values)
+                    //console.log(values)
                     document.forms["vehicleSearch"].submit()
 
                     setSubmitting(false);
@@ -163,7 +162,8 @@ const SearchForm = () => {
                       isValid,
                       errors,
                       isSubmitting,
-                      resetForm
+                      resetForm,
+                      setFieldValue
                   }) => (
                     <Form name="vehicleSearch" action="/car-results" noValidate onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="formBasicVehicleType">
@@ -285,7 +285,7 @@ const SearchForm = () => {
                             <Form.Control.Feedback type="invalid">{errors.orderEndDate}{errors.orderEndTime}</Form.Control.Feedback>
                         </Form.Group>
                     </Row>
-                        <Button variant="primary" type="submit" disabled={isSubmitting}>Submit</Button>
+                        <Button variant="primary" type="submit" onClick={() => {setFieldValue("orderStep", "2"); }} disabled={isSubmitting}>Submit</Button>
 
                     </Form>
                 )}

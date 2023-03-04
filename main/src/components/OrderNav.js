@@ -1,37 +1,44 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useSelector} from "react-redux";
 import {selectDisplayOrderNav, selectOrderParams} from "../store/order";
 
 const OrderNav = () => {
 
+
     // Navigator state parameters
     const orderParams = useSelector(selectOrderParams)
-    const orderStep = useSelector(selectOrderParams).orderStep
+    // const orderStep = useSelector(selectOrderParams).orderStep
+    //
+    // let isActive = true
 
-    let isActive = true
 
-    const displayOrderStep = (step) => {
-        //this.isActive = orderStep <= step;
-        return orderParams.orderStep >= step;
-    }
+// const displayOrderStep = (step) => {
+//     //this.isActive = orderStep <= step;
+//     return orderParams.orderStep >= step;
+// }
+    // Convert Date format
+    let s = new Date(orderParams.orderStart)
+    let e = new Date(orderParams.orderEnd)
+    let startDate = s.getDate() + "-" + (s.getMonth()+1) + "-" + s.getFullYear()
+    let endDate = e.getDate() + "-" + (e.getMonth()+1) + "-" + e.getFullYear()
 
     return(
         <div id="navContainer">
             <div className="navStepContainer" >
                 <h2>1. Tilauksen päivämäärät</h2>
-                {displayOrderStep(1) && <div className="navStepInfo">
-                    <p>Ajoneuvon nouto: {orderParams.orderStartDate} {orderParams.orderStartTime}</p>
-                    <p>Ajoneuvon palautus: {orderParams.orderEndDate} {orderParams.orderEndTime}</p>
+                {orderParams.orderStep >= 1 && <div className="navStepInfo">
+                    <p>Ajoneuvon nouto: {startDate} {orderParams.orderStartTime}</p>
+                    <p>Ajoneuvon palautus: {endDate} {orderParams.orderEndTime}</p>
                 </div>}
             </div>
-            {displayOrderStep(1) && <div className="navStepContainer">
+            {orderParams.orderStep >= 1 &&  <div className="navStepContainer">
                 <h2>2. Ajoneuvon valinta</h2>
-                {displayOrderStep(3) && <div className="navStepInfo">
+                {orderParams.orderStep >= 2  && <div className="navStepInfo">
                     <p>Ajoneuvon tyyppi: {orderParams.orderVehicleType}</p>
                     <p>Ajoneuvon malli: {orderParams.orderVehicleModel}</p>
                 </div>}
             </div>}
-            {!displayOrderStep(1) && <div className="navStepContainer">
+            {!orderParams.orderStep >= 1 && <div className="navStepContainer">
                 <h2>2. Ajoneuvon valinta</h2>
             </div>}
         </div>
