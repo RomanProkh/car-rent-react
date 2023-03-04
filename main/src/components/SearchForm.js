@@ -162,10 +162,9 @@ const SearchForm = () => {
                       isValid,
                       errors,
                       isSubmitting,
-                      resetForm,
-                      setFieldValue
+                      resetForm
                   }) => (
-                    <Form name="vehicleSearch" action="/car-results" noValidate onSubmit={handleSubmit}>
+                    <Form className="searchForm" name="vehicleSearch" action="/car-results" noValidate onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="formBasicVehicleType">
                             <Form.Label>Ajoneuvon tyyppi:</Form.Label>
                             <Form.Control as="select"
@@ -180,6 +179,7 @@ const SearchForm = () => {
                             </Form.Control>
                             <Form.Control.Feedback type="invalid">{errors.vehicleType}</Form.Control.Feedback>
                         </Form.Group>
+                        <div>
 
 
                         <Row className="mb-3 mt-3">
@@ -247,6 +247,8 @@ const SearchForm = () => {
                                 isInvalid={!!errors.orderEndDate}
                             />
                         </Form.Group>
+                        
+                        <Button variant="primary" type="submit" disabled={isSubmitting}>Submit</Button>
                         <Form.Group as={Col} md="6" controlId="formBasicOrderEndTime">
                             <Form.Label>Ajoneuvon palautusaika</Form.Label>
                             <Form.Control  as="select"
@@ -284,7 +286,8 @@ const SearchForm = () => {
                             </Form.Control>
                             <Form.Control.Feedback type="invalid">{errors.orderEndDate}{errors.orderEndTime}</Form.Control.Feedback>
                         </Form.Group>
-                    </Row>
+                            </Row>
+                        </div>
                         <Button variant="primary" type="submit" onClick={() => {setFieldValue("orderStep", "2"); }} disabled={isSubmitting}>Submit</Button>
 
                     </Form>

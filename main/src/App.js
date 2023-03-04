@@ -1,12 +1,15 @@
 import React, { useState} from 'react'
 import {
     BrowserRouter as Router,
-    Switch, Route, Link
+    Switch, Route, Link, NavLink
 } from 'react-router-dom'
 
 import Home from "./components/Home";
 import OrderNav from "./components/OrderNav";
 import ContactUs from "./components/ContactUs";
+import SearchForm from "./components/SearchForm";
+import {NavbarBrand} from "react-bootstrap";
+import Footer from "./components/Footer";
 import CarResults from "./components/CarResults";
 import Order from "./components/Order";
 
@@ -21,8 +24,21 @@ const App = () => {
             <Router>
                 <div>
                     <nav>
-                        <Link to="/">Home</Link>
-                        <Link to="ContactUs">Ota yhteyttä </Link>
+                        <NavbarBrand>
+                            <img src={require('./logo_black.png')} id="logo"/>
+                        </NavbarBrand>
+                        <div>
+                            <NavLink to="Home"
+                            >Home</NavLink>
+                            <NavLink to="ContactUs"
+                            >Ota yhteyttä </NavLink>
+                        </div>
+                        <div>
+                            <NavLink to="/SignIn"
+                            >Sign In</NavLink>
+                            <NavLink to="/SignUP"
+                            >Sign Up</NavLink>
+                        </div>
                     </nav>
                     {displayNav && <OrderNav/>}
                 </div>
@@ -42,6 +58,7 @@ const App = () => {
                     </Route>
                 </Switch>
             </Router>
+            <Footer/>
         </div>
     )
 }

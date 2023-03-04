@@ -20,6 +20,7 @@
     "formik": "^2.2.9",
     "http-proxy-middleware": "^2.0.6",
     "jsonwebtoken": "^9.0.0",
+    "mdb-react-ui-kit": "^5.1.0",
     "mysql": "^2.18.1",
     "query-string": "^8.1.0",
     "react": "^16.13.1",

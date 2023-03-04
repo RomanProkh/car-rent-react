@@ -10,7 +10,7 @@
   --dark-text: #394053;
   --dark-blue-text: #191f2a;
   --dark-light-text: #1d3557;
-  --gray-text: #fcfcfc;
+  --gray-text: #7e7e7e;
   --light-border: #fcfcfc;
   --light-heading: #fcfcfc;
 }
@@ -31,26 +31,38 @@ h2 {
 }
 
 nav {
+  /*background-color: #2c3e50;*/
   margin: 0;
-  padding: 20px 0px;
-  background-color: var(--green);
   display: flex;
-  justify-content: center;
   width: 100%;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 nav a{
-  font-weight: bold;
-  color: #fafafa;
   text-decoration: none;
-  border-right: solid 1px var(--dark-green);
+  font-family: Open Sans,sans-serif;
+  font-size: 0.85em;
   padding: 1em 0.4em;
+  color:  var(--gray-text);
 }
 
-nav a.router-link-exact-active {
-  background: var(--red);
+nav a:hover{
+  text-decoration: none;
 }
 
+nav .active{
+  background-color: rgba(224, 224, 224, 0.43);
+  border-radius: 15px;
+
+}
+
+.navbar-brand{
+  width: 100px;
+  margin: 0;
+  padding: 0;
+}
 
 #pageTitle {
   font-size: 2.5em;
@@ -64,8 +76,7 @@ nav a.router-link-exact-active {
 }
 
 #logo{
-  margin-right: 1%;
-  width: fit-content;
+  width: 100%;
 }
 
 #logo img{
@@ -170,15 +181,22 @@ footer h2 {
 
 #searchFormContainer{
   margin: 0;
-  padding: 20px 0;
-  background-color: #ccc;
-
+  padding: 50px 0;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-form{
+.searchForm{
   margin: 0 auto;
-  max-width: 600px;
-  display: grid;
+  max-width: 1000px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.searchForm button{
+  height: fit-content;
+  background-color: red;
+  border: red;
 }
 
 .formRow{
@@ -281,7 +299,6 @@ figcaption {
   padding: 0;
 }
 
-/*OrderView.vue (scoped)*/
 
 #vehicleInfoContainer {
   margin: 0 auto;
@@ -370,13 +387,11 @@ figcaption {
 }
 
 .container {
-  display: block;
-  margin: auto;
-  text-align: center;
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-  width: 50%;
+  max-width: 1480px;
+}
+
+#homePageBorderContainer {
+
 }
 
 label {
@@ -413,4 +428,96 @@ button:hover{
 .order-nav{
   background-color: var(--green);
   color: white;
+}
+
+.homePageMainModelContainer{
+  text-align: center;
+}
+
+.homePageModelContainer{
+  display: flex;
+  flex-direction: column;
+  width: 1140px;
+  margin: 0 auto;
+  padding-bottom: 50px;
+}
+
+.homePageModelContainer p{
+  margin:0;
+  padding:0;
+}
+
+.homePageAllCardsContainer{
+  min-height: 542px;
+  grid-template-columns: repeat(3, calc(33.3333% - 20px));
+  grid-template-rows: repeat(1, auto);
+  width: 1140px;
+  grid-gap: 30px;
+  margin: 41px 0 60px;
+  display: grid;
+}
+
+.homePageSingleCardContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.homePageSingleCardContainer h3{
+  background-color: #595959;
+  color: white;
+  text-align: center;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0;
+  height: 70px;
+  padding-top: 20px;
+}
+
+#redBackground {
+  background-color: red;
+}
+
+.homePageSingleCardContainer img{
+  height: 227px;
+}
+
+.homePageSingleCardContainer button{
+  background-color: red;
+  border-style: none;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  background-image: none;
+  font-weight: 700;
+  letter-spacing: 1px;
+  height: 42px;
+  margin: 20px auto 0;
+}
+
+.homePageCardDesc {
+  padding: 30px 30px 0;
+}
+
+.homePageCardDesc p{
+  margin: 0 auto;
+}
+
+.homePageCardDesc ul{
+  width: 223px;
+  font-size: 1rem;
+  margin: 20px auto 0;
+}
+
+.homePageCardDesc li{
+  list-style-type: '🔻';
+  padding-inline-start: 4ch;
+  width: fit-content;
+}
+
+.homePageCardDesc svg{
+  position: absolute;
+  width: 1em;
+  height: auto;
+  left: 0.1em;
+  text-align: center;
 }
