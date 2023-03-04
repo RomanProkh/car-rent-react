@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Form from 'react-bootstrap/Form';
+import {Col, Row} from "react-bootstrap";
 import {Button} from "react-bootstrap";
 import {Formik} from "formik";
 import * as yup from 'yup';
@@ -179,35 +180,111 @@ const SearchForm = () => {
                             </Form.Control>
                             <Form.Control.Feedback type="invalid">{errors.vehicleType}</Form.Control.Feedback>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicOrderStart">
-                            <Form.Label>Ajoneuvon nouto:</Form.Label>
-                            <Form.Control
-                                name="orderStart"
-                                type="datetime-local"
-                                value = {values.orderStart}
-                                onChange = {handleChange}
-                                onBlur = {handleBlur}
-                                isValid = {touched.orderStart && !errors.orderStart}
-                                isInvalid={!!errors.orderStart}
-                                //size="lg"
-                            />
-                            <Form.Control.Feedback type="invalid">{errors.orderStart}</Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicOrderStart">
-                            <Form.Label>Ajoneuvon palautus:</Form.Label>
-                            <Form.Control
-                                name="orderEnd"
-                                type="datetime-local"
-                                value = {values.orderEnd}
-                                onChange = {handleChange}
-                                onBlur = {handleBlur}
-                                isValid = {touched.orderEnd && !errors.orderEnd}
-                                isInvalid={!!errors.orderEnd}
-                                //size="lg"
-                            />
-                            <Form.Control.Feedback type="invalid">{errors.orderEnd}</Form.Control.Feedback>
-                        </Form.Group>
 
+
+                        <Row className="mb-3 mt-3">
+
+                        <Form.Group as={Col} md="6" controlId="formBasicOrderStartDate">
+                            <Form.Label>Ajoneuvon noutopäivä:</Form.Label>
+                            <Form.Control
+                                name="orderStartDate"
+                                type="date"
+                                value = {values.orderStartDate}
+                                onChange = {handleChange}
+                                onBlur = {handleBlur}
+                                isValid = {touched.orderStartDate && !errors.orderStartDate}
+                                isInvalid={!!errors.orderStartDate}
+                            />
+                        </Form.Group>
+                        <Form.Group as={Col} md="6" controlId="formBasicOrderStartTime">
+                            <Form.Label>Ajoneuvon noutoaika</Form.Label>
+                            <Form.Control  as="select"
+                                name="orderStartTime"
+                                value = {values.orderStartTime}
+                                onChange = {handleChange}
+                                onBlur = {handleBlur}
+                                isValid = {touched.orderStartTime && !errors.orderStartTime}
+                                isInvalid={!!errors.orderStartTime}>
+                                <option disabled value="">Valitse aika</option>
+                                <option>00:00</option>
+                                <option>01:00</option>
+                                <option>02:00</option>
+                                <option>03:00</option>
+                                <option>04:00</option>
+                                <option>05:00</option>
+                                <option>06:00</option>
+                                <option>07:00</option>
+                                <option>08:00</option>
+                                <option>09:00</option>
+                                <option>10:00</option>
+                                <option>11:00</option>
+                                <option>12:00</option>
+                                <option>13:00</option>
+                                <option>14:00</option>
+                                <option>15:00</option>
+                                <option>16:00</option>
+                                <option>17:00</option>
+                                <option>18:00</option>
+                                <option>19:00</option>
+                                <option>20:00</option>
+                                <option>21:00</option>
+                                <option>22:00</option>
+                                <option>23:00</option>
+                            </Form.Control>
+                            <Form.Control.Feedback type="invalid">{errors.orderStartDate}{errors.orderStartTime}</Form.Control.Feedback>
+                        </Form.Group>
+                        </Row>
+                        <Row className="mb-3 mt-3">
+                        <Form.Group as={Col} md="6"  controlId="formBasicOrderEndDate">
+                            <Form.Label>Ajoneuvon palautuspäivä:</Form.Label>
+                            <Form.Control
+                                name="orderEndDate"
+                                type="date"
+                                value = {values.orderEndDate}
+                                onChange = {handleChange}
+                                onBlur = {handleBlur}
+                                isValid = {touched.orderEndDate && !errors.orderEndDate}
+                                isInvalid={!!errors.orderEndDate}
+                            />
+                        </Form.Group>
+                        <Form.Group as={Col} md="6" controlId="formBasicOrderEndTime">
+                            <Form.Label>Ajoneuvon palautusaika</Form.Label>
+                            <Form.Control  as="select"
+                                           name="orderEndTime"
+                                           value = {values.orderEndTime}
+                                           onChange = {handleChange}
+                                           onBlur = {handleBlur}
+                                           isValid = {touched.orderEndTime && !errors.orderEndTime}
+                                           isInvalid={!!errors.orderEndTime}>
+                                <option disabled value="">Valitse aika</option>
+                                <option>00:00</option>
+                                <option>01:00</option>
+                                <option>02:00</option>
+                                <option>03:00</option>
+                                <option>04:00</option>
+                                <option>05:00</option>
+                                <option>06:00</option>
+                                <option>07:00</option>
+                                <option>08:00</option>
+                                <option>09:00</option>
+                                <option>10:00</option>
+                                <option>11:00</option>
+                                <option>12:00</option>
+                                <option>13:00</option>
+                                <option>14:00</option>
+                                <option>15:00</option>
+                                <option>16:00</option>
+                                <option>17:00</option>
+                                <option>18:00</option>
+                                <option>19:00</option>
+                                <option>20:00</option>
+                                <option>21:00</option>
+                                <option>22:00</option>
+                                <option>23:00</option>
+                            </Form.Control>
+                            <Form.Control.Feedback type="invalid">{errors.orderEndDate}{errors.orderEndTime}</Form.Control.Feedback>
+                        </Form.Group>
+                    </Row>
                         <Button variant="primary" type="submit" disabled={isSubmitting}>Submit</Button>
 
                     </Form>
