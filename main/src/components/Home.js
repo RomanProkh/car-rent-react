@@ -4,15 +4,14 @@ import store from "../store";
 import {setDisplayOrderNav} from "../store/order";
 
 const Home = () => {
+    return (
+        <div className="container" id="homePageBorderContainer">
 
-    // Application state
-    store.dispatch(setDisplayOrderNav(false));
-
-    return(
-        <div className="container">
-            <SearchForm />
+            <SearchForm/>
         </div>
+
     )
+
 }
 
 export default Home

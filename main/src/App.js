@@ -1,17 +1,19 @@
 import React, { useState} from 'react'
 import {
     BrowserRouter as Router,
-    Switch, Route, Link
+    Switch, Route, Link, NavLink
 } from 'react-router-dom'
 
 import Home from "./components/Home";
 import OrderNav from "./components/OrderNav";
 import ContactUs from "./components/ContactUs";
+import Footer from "./components/Footer";
 import CarResults from "./components/CarResults";
 import Order from "./components/Order";
 
 import{useDispatch, useSelector} from 'react-redux';
 import {selectDisplayOrderNav} from "./store/order";
+import {NavbarBrand} from "react-bootstrap";
 
 const App = () => {
     const displayNav = useSelector(selectDisplayOrderNav)
@@ -21,8 +23,19 @@ const App = () => {
             <Router>
                 <div>
                     <nav>
-                        <Link to="/">Home</Link>
-                        <Link to="ContactUs">Ota yhteyttä </Link>
+                        <NavbarBrand>
+                            <img src={require('./logo_black.png')} id="logo"/>
+                        </NavbarBrand>
+                        <div>
+                            <NavLink to="/">Home</NavLink>
+                            <NavLink to="ContactUs">Ota yhteyttä </NavLink>
+                        </div>
+                        <div>
+                            <NavLink to="/SignIn"
+                            >Sign In</NavLink>
+                            <NavLink to="/SignUP"
+                            >Sign Up</NavLink>
+                        </div>
                     </nav>
                     {displayNav && <OrderNav/>}
                 </div>
@@ -42,6 +55,7 @@ const App = () => {
                     </Route>
                 </Switch>
             </Router>
+            <Footer/>
         </div>
     )
 }
