@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 
 // Vapaat autot tietyllä aikavälillä
 app.get('/api/cars', cors(), async function (req, res) {
-    let q = nourl.parse(req.url, true).query;
+    let q = url.parse(req.url, true).query;
     let startDate = q.from;
     let endDate = q.to;
     let type = q.type;

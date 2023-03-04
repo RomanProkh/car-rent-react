@@ -1,31 +1,31 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState} from 'react'
 import {
     BrowserRouter as Router,
     Switch, Route, Link
 } from 'react-router-dom'
 
 import Home from "./components/Home";
-import OrderNav from "./components/NavBar";
+import OrderNav from "./components/OrderNav";
 import ContactUs from "./components/ContactUs";
-import SearchForm from "./components/SearchForm";
+import CarResults from "./components/CarResults";
 
+import{useDispatch, useSelector} from 'react-redux';
+import {selectDisplayOrderNav} from "./store/order";
 
 const App = () => {
-
-    // Show orderNavigator
-    let displayNav = false
+    const displayNav = useSelector(selectDisplayOrderNav)
 
     return (
         <div className="container">
             <Router>
                 <div>
                     <nav>
-
                         <Link to="/">Home</Link>
                         <Link to="ContactUs">Ota yhteyttä </Link>
                     </nav>
+                    {displayNav && <OrderNav/>}
                 </div>
-                {displayNav && <OrderNav/>}
+
                 <Switch>
                     <Route exact path="/">
                         <Home/>
@@ -33,11 +33,10 @@ const App = () => {
                     <Route exact path="/ContactUS">
                         <ContactUs/>
                     </Route>
+                    <Route exact path="/car-results/">
+                        <CarResults/>
+                    </Route>
                 </Switch>
-                <div>
-                    <i>Esimerkkivalikko </i>
-                    <i>perustuu HY:n fullstackopen-kurssimateriaaliin</i>
-                </div>
             </Router>
         </div>
     )
