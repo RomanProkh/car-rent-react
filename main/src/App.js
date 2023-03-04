@@ -7,14 +7,13 @@ import {
 import Home from "./components/Home";
 import OrderNav from "./components/OrderNav";
 import ContactUs from "./components/ContactUs";
-import SearchForm from "./components/SearchForm";
-import {NavbarBrand} from "react-bootstrap";
 import Footer from "./components/Footer";
 import CarResults from "./components/CarResults";
 import Order from "./components/Order";
 
 import{useDispatch, useSelector} from 'react-redux';
 import {selectDisplayOrderNav} from "./store/order";
+import {NavbarBrand} from "react-bootstrap";
 
 const App = () => {
     const displayNav = useSelector(selectDisplayOrderNav)
@@ -28,10 +27,8 @@ const App = () => {
                             <img src={require('./logo_black.png')} id="logo"/>
                         </NavbarBrand>
                         <div>
-                            <NavLink to="Home"
-                            >Home</NavLink>
-                            <NavLink to="ContactUs"
-                            >Ota yhteyttä </NavLink>
+                            <NavLink to="/">Home</NavLink>
+                            <NavLink to="ContactUs">Ota yhteyttä </NavLink>
                         </div>
                         <div>
                             <NavLink to="/SignIn"

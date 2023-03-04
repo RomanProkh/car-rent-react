@@ -247,8 +247,6 @@ const SearchForm = () => {
                                 isInvalid={!!errors.orderEndDate}
                             />
                         </Form.Group>
-                        
-                        <Button variant="primary" type="submit" disabled={isSubmitting}>Submit</Button>
                         <Form.Group as={Col} md="6" controlId="formBasicOrderEndTime">
                             <Form.Label>Ajoneuvon palautusaika</Form.Label>
                             <Form.Control  as="select"
@@ -288,7 +286,7 @@ const SearchForm = () => {
                         </Form.Group>
                             </Row>
                         </div>
-                        <Button variant="primary" type="submit" onClick={() => {setFieldValue("orderStep", "2"); }} disabled={isSubmitting}>Submit</Button>
+                        <Button variant="primary" type="submit"  disabled={isSubmitting}>Submit</Button>
 
                     </Form>
                 )}
