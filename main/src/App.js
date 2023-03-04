@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import OrderNav from "./components/OrderNav";
 import ContactUs from "./components/ContactUs";
 import CarResults from "./components/CarResults";
+import Order from "./components/Order";
 
 import{useDispatch, useSelector} from 'react-redux';
 import {selectDisplayOrderNav} from "./store/order";
@@ -33,8 +34,11 @@ const App = () => {
                     <Route exact path="/ContactUS">
                         <ContactUs/>
                     </Route>
-                    <Route exact path="/car-results/">
+                    <Route exact path="/car-results">
                         <CarResults/>
+                    </Route>
+                    <Route exact path="/order">
+                        <Order/>
                     </Route>
                 </Switch>
             </Router>
