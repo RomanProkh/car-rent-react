@@ -9,7 +9,7 @@ import OrderNav from "./components/NavBar";
 import ContactUs from "./components/ContactUs";
 import SearchForm from "./components/SearchForm";
 import {NavbarBrand} from "react-bootstrap";
-
+import Footer from "./components/Footer";
 
 const App = () => {
 
@@ -22,7 +22,7 @@ const App = () => {
                 <div>
                     <nav>
                         <NavbarBrand>
-                            <img src={require('./logo.png')} id="logo"/>
+                            <img src={require('./logo_black.png')} id="logo"/>
                         </NavbarBrand>
                         <div>
                             <NavLink to="Home"
@@ -52,6 +52,7 @@ const App = () => {
                     <i>perustuu HY:n fullstackopen-kurssimateriaaliin</i>
                 </div>
             </Router>
+            <Footer/>
         </div>
     )
 }

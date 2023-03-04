@@ -164,7 +164,7 @@ const SearchForm = () => {
                       isSubmitting,
                       resetForm
                   }) => (
-                    <Form name="vehicleSearch" action="/car-results" noValidate onSubmit={handleSubmit}>
+                    <Form className="searchForm" name="vehicleSearch" action="/car-results" noValidate onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="formBasicVehicleType">
                             <Form.Label>Ajoneuvon tyyppi:</Form.Label>
                             <Form.Control as="select"
@@ -179,6 +179,7 @@ const SearchForm = () => {
                             </Form.Control>
                             <Form.Control.Feedback type="invalid">{errors.vehicleType}</Form.Control.Feedback>
                         </Form.Group>
+                        <div>
                         <Form.Group className="mb-3" controlId="formBasicOrderStart">
                             <Form.Label>Ajoneuvon nouto:</Form.Label>
                             <Form.Control
@@ -207,7 +208,7 @@ const SearchForm = () => {
                             />
                             <Form.Control.Feedback type="invalid">{errors.orderEnd}</Form.Control.Feedback>
                         </Form.Group>
-
+                        </div>
                         <Button variant="primary" type="submit" disabled={isSubmitting}>Submit</Button>
 
                     </Form>
