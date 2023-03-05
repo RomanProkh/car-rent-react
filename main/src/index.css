@@ -186,15 +186,16 @@ footer h2 {
   background-color: rgba(0, 0, 0, 0.05);
   border: solid 1px rgb(180, 22, 22);
   border-radius: 15px;
-  width: 70%;
+  width: 75%;
+}
+
+#searchFormContainer button{
+  margin: 0;
 }
 
 .searchForm{
   margin: 0 auto;
   max-width: 1000px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
 }
 
 .form-group {
