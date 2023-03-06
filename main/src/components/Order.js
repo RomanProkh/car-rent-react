@@ -37,14 +37,16 @@ const Order = () => {
     let history = useHistory()
 
     const [vehicle, setVehicle] = useState([]);
+    const [order, setOrder] = useState({});
 
     // Fetching vehicles listing data
     useEffect(() => {
 
-        store.dispatch(setOrderStep(query.orderStep))
-        store.dispatch(setDisplayOrderNav(false));
 
-        if (query.orderStep !== '5') {
+
+        if (orderParams.orderStep < 4) {
+            store.dispatch(setOrderStep(query.orderStep))
+            store.dispatch(setDisplayOrderNav(false));
         let orderStart = new Date(query.orderStartDate.toString() + "T" + query.orderStartTime.toString());
         let orderEnd = new Date(query.orderEndDate.toString() + "T" + query.orderEndTime.toString());
 
@@ -79,21 +81,17 @@ const Order = () => {
         store.dispatch(setOrderStartTime(query.orderStartTime))
         store.dispatch(setOrderEndTime(query.orderEndTime))
         store.dispatch(setOrderVehicleId(query.vehicleId))
-        store.dispatch(setOrderFirstName(query.orderFirstName))
-        store.dispatch(setOrderLastName(query.orderLastName))
-        store.dispatch(setOrderEmail(query.orderEmail))
-        store.dispatch(setOrderPhoneNumber(query.orderPhoneNumber))
-        store.dispatch(setOrderHomeAddress(query.orderHomeAddress))
-        store.dispatch(setOrderCity(query.orderCity))
-        store.dispatch(setOrderPostalCode(query.orderPostalCode))
-        store.dispatch(setOrderPayment(query.orderPayment))
+        // store.dispatch(setOrderFirstName(query.orderFirstName))
+        // store.dispatch(setOrderLastName(query.orderLastName))
+        // store.dispatch(setOrderEmail(query.orderEmail))
+        // store.dispatch(setOrderPhoneNumber(query.orderPhoneNumber))
+        // store.dispatch(setOrderHomeAddress(query.orderHomeAddress))
+        // store.dispatch(setOrderCity(query.orderCity))
+        // store.dispatch(setOrderPostalCode(query.orderPostalCode))
+        // store.dispatch(setOrderPayment(query.orderPayment))
 
 
         }
-
-        // if(query.orderStep === '4'){
-        //     getOrderSummary();
-        // }
 
     }, [query.orderStart, query.orderEnd, query.type, query.orderStartDate, query.orderEndDate, query.orderStartTime, query.orderEndTime, query.vehicleId, query.orderStep]);
 
@@ -114,13 +112,13 @@ const Order = () => {
         return orderTime / 3600000;
     }
 
-    // Method placing new order to database and sending confirmation email to a given e-mail
-    const sendOrder = async (order) => {
+    const orderSummary = (order) =>{
 
+        store.dispatch(setOrderStep('4'))
         let date = new Date();
         let today = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
-        await axios.post('/api/orders/', {
 
+        setOrder({
             First_name: order.orderFirstName,
             Last_name: order.orderLastName,
             Email: order.orderEmail,
@@ -134,13 +132,43 @@ const Order = () => {
             Order_start: orderParams.orderStartDate + " " + orderParams.orderStartTime,
             Order_end: orderParams.orderEndDate + " " + orderParams.orderEndTime,
             Amount: orderParams.orderAmount
-        })
+            }
+        )
+
+        console.log(orderParams.orderStep)
+        // // store.dispatch(setDisplayOrderNav(true));
+        // // store.dispatch(setOrderStart(orderStart.toString()))
+        // // store.dispatch(setOrderEnd(orderEnd.toString()))
+        // store.dispatch(setOrderStartDate(query.orderStartDate))
+        // store.dispatch(setOrderEndDate(query.orderEndDate))
+        // store.dispatch(setOrderStartTime(query.orderStartTime))
+        // store.dispatch(setOrderEndTime(query.orderEndTime))
+        // store.dispatch(setOrderVehicleId(query.vehicleId))
+        store.dispatch(setOrderFirstName(order.orderFirstName))
+        store.dispatch(setOrderLastName(order.orderLastName))
+        store.dispatch(setOrderEmail(order.orderEmail))
+        store.dispatch(setOrderPhoneNumber(order.orderPhoneNumber))
+        store.dispatch(setOrderHomeAddress(order.orderHomeAddress))
+        store.dispatch(setOrderCity(order.orderCity))
+        store.dispatch(setOrderPostalCode(order.orderPostalCode))
+        store.dispatch(setOrderPayment(order.orderPayment))
+
+
+    }
+
+    // Method placing new order to database and sending confirmation email to a given e-mail
+    const sendOrder = async () => {
+
+        let date = new Date();
+        let today = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
+        await axios.post('/api/orders/', order)
             .then(function (response) {
                 console.log(response);
                 if (response.status === 200) {
                     console.log("Response 200 OK!");
                     // Redirect to order confirmation
-                   // history.push('/order?displayOrderNav=0&orderStep=5');
+                    store.dispatch(setDisplayOrderNav(false))
+                    store.dispatch(setOrderStep('5'))
                 }
             })
             .catch(function (error) {
@@ -205,8 +233,8 @@ const Order = () => {
                         orderPayment: ''
                     }}
                     onSubmit={(values, {setSubmitting, resetForm}) => {
-                        sendOrder(values).then(r => history.push('/order?displayOrderNav=0&orderStep=5'))
-
+                        //sendOrder(values).then(r => history.push('/order?displayOrderNav=0&orderStep=4'))
+                        orderSummary(values)
                         setSubmitting(false);
                     }}
                 >
@@ -372,7 +400,7 @@ const Order = () => {
                 <button onClick={sendOrder}>Lähetä tilaus</button>
             </div>}
             {/* ------------ Tilauksen kuittaus ------------ */}
-            {query.orderStep === '5' && <div id="orderConfirmationContainer">
+            {orderParams.orderStep === '5' && <div id="orderConfirmationContainer">
                 <h1>Order confirmation</h1>
 
                 <button onClick={() => history.push('/')}>Pääsivulle</button>
