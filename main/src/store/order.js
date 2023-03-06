@@ -7,6 +7,7 @@ const slice = createSlice({
     name: 'order',
     initialState: {
         displayOrderNav: false,
+        displayElem: '',
         orderParams: {
             orderStep: 1,
             orderStart: '',
@@ -36,6 +37,9 @@ const slice = createSlice({
         setDisplayOrderNav: (state, action) =>{
                state.displayOrderNav = action.payload;
              },
+        setDisplayElem: (state, action) =>{
+            state.displayElem = action.payload;
+        },
         setOrderStep: (state, action) =>{
             state.orderParams.orderStep = action.payload;
         },
@@ -105,6 +109,7 @@ const slice = createSlice({
 
 // Setters
 export const { setDisplayOrderNav } = slice.actions
+export const { setDisplayElem } = slice.actions
 export const { setOrderStep } = slice.actions
 export const { setOrderStart } = slice.actions
 export const { setOrderEnd } = slice.actions
@@ -129,6 +134,7 @@ export const { setOrderCity } = slice.actions
 
 // Selectors
 export const selectDisplayOrderNav = (state) => state.order.displayOrderNav
+export const selectDisplayElem = (state) => state.order.displayElem
 export const selectOrderParams = (state) => state.order.orderParams
 
 export default slice.reducer

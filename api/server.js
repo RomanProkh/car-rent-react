@@ -51,6 +51,17 @@ function authenticateToken(req, res, next) {
 }
 
 let bodyParser = require('body-parser');
+
+// node native promisify
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Bearer  ");
+    next();
+});
+
+let urlencodedParser = bodyParser.urlencoded({ extended: false });
+
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
@@ -60,13 +71,6 @@ app.get('/api/cars', cors(), async function (req, res) {
     let startDate = q.from;
     let endDate = q.to;
     let type = q.type;
-
-    // let sql = "SELECT vehicle.Vehicle_id, vehicle_type.Type_name, Vehicle_model, Reg_number, Price, Vehicle_descr, Vehicle_src FROM vehicle, `order`, vehicle_type" +
-    //     " WHERE vehicle.Vehicle_id = order.Vehicle_id AND vehicle.Vehicle_type = vehicle_type.Type_id AND Vehicle_type = '" + type + "' AND order.Order_end <= '" + startDate +
-    //     "' OR vehicle.Vehicle_id = order.Vehicle_id AND vehicle.Vehicle_type = vehicle_type.Type_id AND order.Order_start >= '" + endDate + "' " +
-    //     "AND Vehicle_type = '" + type + "' OR NOT vehicle.Vehicle_id = order.Vehicle_id AND vehicle.Vehicle_type = vehicle_type.Type_id AND Vehicle_type = '" + type + "'" + //jos ajoneuvoa ei ole tilattu ollenkaan
-    //     " GROUP BY Vehicle_model " +
-    //     "ORDER BY Vehicle_model ";
 
     let sql = "SELECT vehicle.Vehicle_id, vehicle_type.Type_name, Vehicle_model, Reg_number, Price, Vehicle_descr, Vehicle_src" +
         " FROM `vehicle`" +
@@ -136,48 +140,20 @@ app.get('/api/vehicle_type', cors(), async function (req, res) {
 
 // Tilauksen tekeminen
 app.post('/api/orders/', async (req, res) =>{
-    // let json = JSON.stringify(req.body);
-    // let jsonLength = Object.keys(json).length;
-    //
-    // let sql = "INSERT INTO `order` (First_name, Last_name, Email, Phone_Number, Home_address," +
-    //     "City,Postal_code,Payment,Vehicle_id, Date_create, Order_start, Order_end, Amount)" +
-    //     "SELECT *" +
-    //     " FROM JSON_TABLE ('" + json + "', '$' COLUMNS ( " +
-    //     "First_name          VARCHAR(45)     PATH '$[0].First_name', " +
-    //     "Last_name           VARCHAR(45)     PATH '$[0].Last_name', " +
-    //     "Email               VARCHAR(45)     PATH '$[0].Email', " +
-    //     "Phone_Number        VARCHAR(13)     PATH '$[0].Phone_Number', " +
-    //     "Home_address        VARCHAR(50)     PATH '$[0].Home_address', " +
-    //     "City                VARCHAR(50)     PATH '$[0].City', " +
-    //     "Postal_code         int(5)          PATH '$[0].Postal_code', " +
-    //     "Payment             VARCHAR(50)     PATH '$[0].Payment', " +
-    //     "Vehicle_id          INT(11)         PATH '$[0].Vehicle_id'," +
-    //     "Date_create         datetime        PATH '$[0].Date_create', " +
-    //     "Order_start         datetime        PATH '$[0].Order_start', " +
-    //     "Order_end           datetime        PATH '$[0].Order_end', " +
-    //     "Amount              decimal(10,2)   PATH '$[0].Amount')) AS `order`;"
-    let result
+
     try {
-        // const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const data = req.body
-        //console.log(hashedPassword)
-        let insertedLocationId;
-        console.log(data)
-        // make updates to the database
-        // if (user.email !== '') { // is  a username present?
+
         let sql = "INSERT INTO `order` (First_name, Last_name, Email, Phone_Number, Home_address, City, Postal_code, Payment, Vehicle_id, Date_create, Order_start, Order_end, Amount) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         let db = makeDb();
         try {
             await makeTransaction(db, async () => {
-
                 // INSERT NEW ORDER
                 db.query(sql, [data.First_name, data.Last_name, data.Email, data.Phone_Number, data.Home_address, data.City, data.Postal_code, data.Payment, data.Vehicle_id, data.Date_create, data.Order_start, data.Order_end, data.Amount]).then((result) =>  res.status(200).send("POST was succesful "));
-
             });
         } catch (err) {
             res.status(400).send("POST was not succesful ");
         }
-        // }
     } catch (e) {
         res.json({message: "Error"});
     }
@@ -224,6 +200,138 @@ app.post('/api/orders/', async (req, res) =>{
 
 })
 
+// ----------------------- Käyttäjäj rekisteröinti ja sisäänkirjauttuminen --------------------- //
+
+// User signup
+app.post('/api/signup/', async (req, res) => {
+    console.log(req.body)
+    try {
+        const user = req.body
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        //console.log(hashedPassword)
+
+        // make updates to the database
+        if (user.email !== '') { // is  a username present?
+
+            let sql = "INSERT INTO user (Username, Email, Password, First_Name, Last_name, Phone_number, Home_Address, City, Postal_Code)"
+                + " VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            let db = makeDb();
+            try {
+                await makeTransaction(db, async () => {
+                    await db.query(sql, [user.userName, user.email, hashedPassword ,user.firstName, user.lastName, user.phoneNumber, user.homeAddress, user.city, user.postalCode ]);
+
+                    // res.status(200).send("POST succesful ");
+                    const accessToken = jwt.sign(JSON.stringify(user), process.env.SECRET_KEY)
+                    //console.log(accessToken)
+
+                    res.status(202).json({ accessToken: accessToken })
+                });
+            } catch (err) {
+                res.status(400).send("POST was not succesful ");
+            }
+        }
+    } catch (e) {
+        res.json({message: "Error"});
+    }
+});
+
+// User login
+app.post('/api/signin', urlencodedParser, async(req, res) => {
+    let user = req.body
+    //console.log(user)
+    try{
+        // Try to obtain a given account password from the database to compare
+        let dbUserPassword = ''
+        let sql = "SELECT username, email, password, COUNT(password) AS rows_found " +
+            " FROM `user` WHERE email = ? "
+
+        let db = makeDb()
+        try {
+            await makeTransaction(db, async () => {
+                await db.query(sql, [user.email]).then((result) => {
+                    // If user data found from the database
+                    dbUserPassword = result[0].rows_found === 1 ? result[0].password : null });
+                //console.log(dbUserPassword)
+            });
+        } catch (err) {
+            console.log(err);
+        }
+
+        //Comparing the passswods
+        if(dbUserPassword !== null){
+            try{
+                const match = await bcrypt.compare(user.password, dbUserPassword);
+                const accessToken = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET)
+                if(match){
+                    console.log("Passwords matched")
+                    res.json({
+                        accessToken: accessToken,
+                        message: "User Identified"});
+                } else {
+                    res.json({
+                        accessToken: null,
+                        message: "Invalid Credentials" });
+                }
+            } catch(e) {
+                console.log(e)
+            }
+        } else {
+            res.json({
+                accessToken: null,
+                message: "Invalid Credentials" });
+        }
+    }catch(e){
+        res.json({
+            accessToken: null,
+            message: "Error"})
+    }
+
+})
+
+
+// Existing usernames
+app.get('/api/usernames', cors(), async function (req, res) {
+
+    let q = url.parse(req.url, true).query;
+    let username = q.username;
+    let email = q.email;
+
+    let rowsFound = {
+        username: false,
+        email: false
+    }
+
+    let sqlCheckUsername = "SELECT COUNT(username) AS rows_found " +
+        " FROM `user` WHERE username = ? "
+    let sqlCheckEmail = "SELECT COUNT(email) AS rows_found" +
+        " FROM `user` WHERE email = ? "
+
+    try {
+        // Check username
+        if (q.username !== '') {
+            let db = makeDb();
+            await makeTransaction(db, async () => {
+                await db.query(sqlCheckUsername, [q.username]).then((result) => rowsFound.username = result[0].rows_found > 0 ? true : false);
+            });
+        }
+        // Check email
+        if (q.email !== '') {
+            let db = makeDb();
+            await makeTransaction(db, async () => {
+                await db.query(sqlCheckEmail, [q.email]).then((result) => rowsFound.email = result[0].rows_found > 0 ? true : false);
+            });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+
+    res.send(rowsFound);
+})
+
+
+
+
+// ---------------------- YHTEYDET ----------------------------------------- //
 let server = app.listen(8081, function () {
     let host = server.address().address
     let port = server.address().port

@@ -14,8 +14,11 @@ import Order from "./components/Order";
 import{useDispatch, useSelector} from 'react-redux';
 import {selectDisplayOrderNav} from "./store/order";
 import {NavbarBrand} from "react-bootstrap";
+import SignUp from "./components/SignUp";
+import SignIn from "./components/SignIn";
 
 const App = () => {
+
     const displayNav = useSelector(selectDisplayOrderNav)
 
     return (
@@ -35,7 +38,7 @@ const App = () => {
                         <div>
                             <NavLink to="/SignIn" className="hvr-buzz-out"
                             >Sign In</NavLink>
-                            <NavLink to="/SignUP" className="hvr-buzz-out"
+                            <NavLink to="/SignUp" className="hvr-buzz-out"
                             >Sign Up</NavLink>
                         </div>
                     </nav>
@@ -54,6 +57,12 @@ const App = () => {
                     </Route>
                     <Route exact path="/order">
                         <Order/>
+                    </Route>
+                    <Route exact path="/SignUp">
+                        <SignUp/>
+                    </Route>
+                    <Route exact path="/SignIn">
+                        <SignIn/>
                     </Route>
                 </Switch>
             </Router>

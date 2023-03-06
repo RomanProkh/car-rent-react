@@ -1,8 +1,11 @@
 import React from "react"
 import {useFormik} from "formik"
 import * as Yup from "yup"
+import store from "../store";
+import {setDisplayOrderNav} from "../store/order";
 
 const ContactUs = () => {
+    store.dispatch(setDisplayOrderNav(false));
 
     const formik = useFormik({
         initialValues: {
