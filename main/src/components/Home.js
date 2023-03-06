@@ -1,9 +1,21 @@
-import React from "react";
+import React, {useEffect} from "react";
 import SearchForm from "./SearchForm";
 import store from "../store";
-import {setDisplayOrderNav} from "../store/order";
+import {
+    setDisplayOrderNav,
+    setOrderStep
+} from "../store/order";
 
 const Home = () => {
+
+    // Fetching vehicles listing data
+    useEffect(() => {
+
+        store.dispatch(setDisplayOrderNav(false))
+        store.dispatch(setOrderStep(0))
+
+    }, []);
+
     return (
         <div className="container" id="homePageBorderContainer">
             <SearchForm/>

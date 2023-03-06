@@ -6,17 +6,15 @@ import { useHistory } from "react-router-dom";
 import store from "../store";
 import {
     setDisplayOrderNav,
-    selectDisplayOrderNav,
     setOrderVehicleId,
     setOrderStart,
     setOrderEnd,
     setOrderStep, setOrderStartDate, setOrderEndDate, setOrderStartTime, setOrderEndTime, selectOrderParams
 } from "../store/order";
-import {useDispatch, useSelector} from "react-redux";
+import { useSelector} from "react-redux";
 const CarResults = () => {
 
     // Application state getter
-    const displayNav = useSelector(selectDisplayOrderNav)
     const orderParams = useSelector(selectOrderParams)
 
 
@@ -27,20 +25,14 @@ const CarResults = () => {
     let history = useHistory()
     const [vehicles, setVehicles] = useState([]);
 
-
-
-
-
-
     // Fetching vehicles listing data
     useEffect(() => {
 
-        let orderStart = new Date(query.orderStartDate + "T" + query.orderStartTime.toString());
-        let orderEnd = new Date(query.orderEndDate + "T" + query.orderEndTime.toString());
-
+        let orderStart = new Date(query.orderStartDate + "T" + query.orderStartTime);
+        let orderEnd = new Date(query.orderEndDate + "T" + query.orderEndTime);
 
         // Saving parameters into store
-        //this.checkDates();
+
         store.dispatch(setOrderStart(orderStart.toString()))
         store.dispatch(setOrderEnd(orderEnd.toString()))
         store.dispatch(setOrderStartDate(query.orderStartDate))
@@ -49,12 +41,14 @@ const CarResults = () => {
         store.dispatch(setOrderEndTime(query.orderEndTime))
 
         store.dispatch(setDisplayOrderNav(true))
-        store.dispatch(setOrderStep(1))
+        store.dispatch(setOrderStep(query.orderStep))
+
+        // Method for checking order's date & time
 
         // Fetching vehicle list data
         const vehicleData = async () =>{
         axios
-            .get("/api/cars?from=" + query.orderStartDate + "&to=" + query.orderEndDate + "&type="  + query.type)
+            .get("/api/cars?from=" + query.orderStartDate + " " + query.orderStartTime + "&to=" + query.orderEndDate + " " + query.orderEndTime + "&type="  + query.type)
             .then((res) => {
                 setVehicles(res.data)
                 // this.orderStartTime = start // Refreshing order information
@@ -63,51 +57,27 @@ const CarResults = () => {
             .catch((err) => console.log(err));
         }
         vehicleData().catch(console.error)
-    }, [query.orderStart, query.orderEnd, query.type]);
+    }, [query.orderStart, query.orderEnd, query.type, query.orderStartDate, query.orderEndDate, query.orderStartTime, query.orderEndTime, history]);
 
 
-    // Method for checking order's date & time
-    const checkDates = () => {
-        let startDate = query.orderStartDate + " " + query.orderStartTime;
-        let endDate = query.orderEndDate + " " + query.orderEndTime;
 
-        if (!startDate || !endDate) {
-            store.dispatch(setDisplayOrderNav(false)) // Disable order navigator bar
-            history.push('/'); // Redirect to the start page
-        }
-    }
     // Method calculates&returns the orders duration
     // If dates are incorrect redirects to start page
-    const getOrderDuration = () => {
 
-        let orderStart = query.orderStartDate + "T" + query.orderStartTime;
-        let orderEnd = query.orderEndDate + "T" + query.orderEndTime;
-
-        let orderTime;
-        if ((Date.parse(orderEnd) - Date.parse(orderStart)) > 0) {
-            orderTime = Date.parse(orderEnd) - Date.parse(orderStart);
-            //console.log(orderTime)
-        } else {
-            history.push('/');
-        }
-        return orderTime / 3600000;
-    }
 
     // Method starts order process
     const makeOrder = (vehicleId) =>{
 
         // Saving order parameters into application store
         store.dispatch(setDisplayOrderNav(true));
-        store.dispatch(setOrderStep(1));
+        store.dispatch(setOrderStep(3));
         store.dispatch(setOrderVehicleId(vehicleId))
 
-
-
-        history.push('/order' + '?displayOrderNav=true&orderStartDate=' + orderParams.orderStartDate
+        history.push('/order?displayOrderNav=true&orderStartDate=' + orderParams.orderStartDate
             + '&orderEndDate=' + orderParams.orderEndDate
             + '&orderStartTime=' + orderParams.orderStartTime
             + '&orderEndTime=' + orderParams.orderEndTime
-            + '&vehicleId=' + vehicleId + '&orderStep=2');
+            + '&vehicleId=' + vehicleId + '&orderStep=3');
         return true;
     }
 
@@ -121,7 +91,7 @@ const CarResults = () => {
                                 <img src={require("../assets/cars/"+ option.Vehicle_src)} alt={option.Vehicle_model}/>
                                 <figcaption>{option.Vehicle_model}</figcaption>
                             </figure>
-                            <p>{(option.Price * getOrderDuration()).toFixed(2)} €</p>
+                            {/*<p>{(option.Price * getOrderDuration()).toFixed(2)} €</p>*/}
                             <button onClick={() => makeOrder(option.Vehicle_id)}>Tilaa</button>
                         </li>))}
                 </ul>

@@ -8,32 +8,7 @@ import * as yup from 'yup';
 
 const SearchForm = () => {
 
-    // Vehicle search form handlers & setters
-    const [validated, setValidated] = useState(false);
-
-
-
-    // let [formErrors, setFormErrors] = useState({
-    //     missingOrderStartDate: '',
-    //     missingOrderStartTime: '',
-    //     missingOrderEndDate: '',
-    //     missingOrderEndTime: '',
-    //     toEarlyStartTime: ''
-    // });
-
     const [vehicleTypes, setVehicleTypes] = useState([]);
-
-    const [orderParam, setOrderParam] = useState({
-        orderStartDate: '',
-        orderEndDate: '',
-        orderStartTime: '',
-        orderEndTime: ''
-
-    });
-    const handleChange = (event) => {
-        setOrderParam({...orderParam, [event.target.name]: event.target.value});
-    }
-
 
     // Fetching existing vehicle type names data
 
@@ -164,7 +139,10 @@ const SearchForm = () => {
                       isSubmitting,
                       resetForm
                   }) => (
-                    <Form className="searchForm" name="vehicleSearch" action="/car-results" noValidate onSubmit={handleSubmit}>
+                    <Form className="" name="vehicleSearch" action="/car-results" noValidate onSubmit={handleSubmit}>
+                        <Form.Control name="displayOrderNav" type="hidden" value="true"/>
+                        <Form.Control name="orderStep" type="hidden" value="2"/>
+
                         <Form.Group className="mb-3" controlId="formBasicVehicleType">
                             <Form.Label>Ajoneuvon tyyppi:</Form.Label>
                             <Form.Control as="select"
@@ -179,8 +157,6 @@ const SearchForm = () => {
                             </Form.Control>
                             <Form.Control.Feedback type="invalid">{errors.vehicleType}</Form.Control.Feedback>
                         </Form.Group>
-                        <div>
-
 
                         <Row className="mb-3 mt-3">
 
@@ -285,7 +261,7 @@ const SearchForm = () => {
                             <Form.Control.Feedback type="invalid">{errors.orderEndDate}{errors.orderEndTime}</Form.Control.Feedback>
                         </Form.Group>
                             </Row>
-                        </div>
+
                         <Button variant="primary" type="submit"  disabled={isSubmitting}>Submit</Button>
 
                     </Form>
