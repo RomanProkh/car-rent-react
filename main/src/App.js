@@ -27,7 +27,7 @@ const App = () => {
                             <img src={require('./logo_black.png')} alt="logo" id="logo"/>
                         </NavbarBrand>
                         <div>
-                            <NavLink to="Home" className="hvr-sweep-to-right"
+                            <NavLink to="/" className="hvr-sweep-to-right"
                             >Home</NavLink>
                             <NavLink to="ContactUs" className="hvr-sweep-to-right"
                             >Ota yhteyttä </NavLink>
@@ -43,7 +43,7 @@ const App = () => {
                 </div>
 
                 <Switch>
-                    <Route exact path="/Home">
+                    <Route exact path="/">
                         <Home/>
                     </Route>
                     <Route exact path="/ContactUS">

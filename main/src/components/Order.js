@@ -109,7 +109,7 @@ const Order = () => {
             orderTime = Date.parse(orderEnd) - Date.parse(orderStart);
             //console.log(orderTime)
         } else {
-            if(query.orderStep !== '5') history.push('/Home');
+            if(query.orderStep !== '5') history.push('/');
         }
         return orderTime / 3600000;
     }
@@ -375,7 +375,7 @@ const Order = () => {
             {query.orderStep === '5' && <div id="orderConfirmationContainer">
                 <h1>Order confirmation</h1>
 
-                <button onClick={() => history.push('/Home')}>Pääsivulle</button>
+                <button onClick={() => history.push('/')}>Pääsivulle</button>
 
             </div>}
             {/* ------------ Order confirmation email form ------------ */}

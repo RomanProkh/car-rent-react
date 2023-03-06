@@ -73,7 +73,7 @@ const CarResults = () => {
             orderTime = Date.parse(orderEnd) - Date.parse(orderStart);
             //console.log(orderTime)
         } else {
-            history.push('/Home');
+            history.push('/');
         }
         return orderTime / 3600000;
     }
