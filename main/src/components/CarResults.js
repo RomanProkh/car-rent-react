@@ -82,19 +82,41 @@ const CarResults = () => {
         return true;
     }
 
+
+    const getOrderDuration = () => {
+
+        let orderStart = query.orderStartDate + "T" + query.orderStartTime;
+        let orderEnd = query.orderEndDate + "T" + query.orderEndTime;
+
+        let orderTime;
+        if ((Date.parse(orderEnd) - Date.parse(orderStart)) > 0) {
+            orderTime = Date.parse(orderEnd) - Date.parse(orderStart);
+            //console.log(orderTime)
+        } else {
+            history.push('/');
+        }
+        return orderTime / 3600000;
+    }
+
     return (
         <div className="container">
-            <div id="carList">
+            <div className="carList">
                 <ul className="card">
                     {vehicles.map((option, index) => (
-                        <li key={option.Vehicle_id}>
-                            <figure>
-                                <img src={require("../assets/cars/"+ option.Vehicle_src)} alt={option.Vehicle_model}/>
-                                <figcaption>{option.Vehicle_model}</figcaption>
-                            </figure>
-                            <p>{(option.Price * getOrderDuration()).toFixed(2)} €</p>
+                        <div className="homePageSingleCardContainer hvr-grow">
+                            <h4>{option.Vehicle_model}</h4>
+                            <img src={require("../assets/cars/" + option.Vehicle_src)} alt={option.Vehicle_model}/>
+                            <div className="homePageCardDesc">
+                                <p>Kokonaishinta <b>{(option.Price * getOrderDuration()).toFixed(2)} €</b></p>
+                                <ul id="special">
+                                    <li>
+                                        Hinta/tunti <b>{option.Price} €</b>
+                                    </li>
+                                </ul>
+                            </div>
                             <button onClick={() => makeOrder(option.Vehicle_id)}>Tilaa</button>
-                        </li>))}
+
+                        </div>))}
                 </ul>
             </div>
         </div>

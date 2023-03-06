@@ -261,8 +261,7 @@ const SearchForm = () => {
                             <Form.Control.Feedback type="invalid">{errors.orderEndDate}{errors.orderEndTime}</Form.Control.Feedback>
                         </Form.Group>
                             </Row>
-
-                        <Button variant="primary" type="submit"  disabled={isSubmitting}>Submit</Button>
+                        <Button variant="primary" className="hvr-grow" type="submit"  disabled={isSubmitting}>Tee tilaus</Button>
 
                     </Form>
                 )}

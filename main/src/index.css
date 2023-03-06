@@ -5,12 +5,13 @@
   --red: #CA3C25;
   --dark: #0D3B66;
   --light-grey:#DCDCDC;
-
+  --grey:rgba(0, 0, 0, 0.05);
   /* text-colors */
   --dark-text: #394053;
   --dark-blue-text: #191f2a;
   --dark-light-text: #1d3557;
   --gray-text: #7e7e7e;
+  --light-border: #fcfcfc;
   --light-border: #fcfcfc;
   --light-heading: #fcfcfc;
 }
@@ -28,7 +29,7 @@ body {
 }
 
 h2 {
-  margin: 0;
+  margin: 0 auto;
   padding-bottom: 20px;
 }
 
@@ -40,7 +41,6 @@ nav {
   align-items: center;
   justify-content: space-between;
   border-bottom: solid 1px gray;
-  margin-bottom: 50px;
 }
 
 nav a{
@@ -167,9 +167,9 @@ footer h2 {
 #navContainer{
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  border: solid 3px var(--dark-green);
+  border: solid 1px red;
+  background-color: var(--grey);
+  border-radius: 15px;
   margin: 10px 10px;
 }
 .navStepContainer{
@@ -183,21 +183,24 @@ footer h2 {
 /*SearchForm.vue (scoped)*/
 
 #searchFormContainer{
-  margin: 30px auto;
+  margin: 50px auto;
   padding: 30px 0;
-  background-color: rgba(0, 0, 0, 0.05);
-  border: solid 1px rgb(180, 22, 22);
+  background-color: var(--grey) ;
+  border: solid 1px red;
   border-radius: 15px;
   width: 75%;
+  display: grid;
+  justify-content: center;
 }
 
 #searchFormContainer button{
-  margin: 0;
+  margin: 0 auto;
 }
 
 .searchForm{
   margin: 0 auto;
   max-width: 1000px;
+  display: grid;
 }
 
 .form-group {
@@ -267,7 +270,7 @@ input[type=submit]:hover {
 }
 
 /*CarResultsView.vue*/
-#carList {
+.carList {
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -275,9 +278,13 @@ input[type=submit]:hover {
   width: 80%;
 }
 .card {
-  margin-bottom: 3%;
-  background-color: var(--light-grey);
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  border: none;
 }
+
 figcaption {
   font-weight: 700;
   font-size:1.3rem;
@@ -293,23 +300,17 @@ figcaption {
   cursor: pointer;
   background-color: var(--dark-blue-text);
 }
-#carList img {
+.carList img {
   height: 250px;
   width: 315px;
 }
 
-#carList ul{
+.carList ul{
   list-style: none;
   margin: 0.5% auto;
   padding: 0;
+  justify-content: space-around;
 }
-
-#carList ul li{
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
 
 #vehicleInfoContainer {
   display: block;
@@ -468,7 +469,7 @@ button:hover{
 .homePageSingleCardContainer {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  padding-top: 60px;
 }
 
 .homePageSingleCardContainer h3{
@@ -480,6 +481,17 @@ button:hover{
   margin: 0;
   height: 70px;
   padding-top: 20px;
+}
+
+.homePageSingleCardContainer h4 {
+  background-color: #595959;
+  color: white;
+  text-align: center;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0;
+  height: 40px;
+  padding: 6px;
 }
 
 #redBackground {
@@ -514,6 +526,14 @@ button:hover{
   width: 223px;
   font-size: 1rem;
   margin: 20px auto 0;
+  justify-content: space-around;
+}
+
+.homePageCardDesc #special ul{
+  width: 223px;
+  font-size: 1rem;
+  margin: 20px auto 0;
+  justify-content: space-around;
 }
 
 .homePageCardDesc li{

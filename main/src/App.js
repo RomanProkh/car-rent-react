@@ -27,15 +27,15 @@ const App = () => {
                             <img src={require('./logo_black.png')} alt="logo" id="logo"/>
                         </NavbarBrand>
                         <div>
-                            <NavLink to="Home"
+                            <NavLink to="Home" className="hvr-sweep-to-right"
                             >Home</NavLink>
-                            <NavLink to="ContactUs"
+                            <NavLink to="ContactUs" className="hvr-sweep-to-right"
                             >Ota yhteyttä </NavLink>
                         </div>
                         <div>
-                            <NavLink to="/SignIn"
+                            <NavLink to="/SignIn" className="hvr-buzz-out"
                             >Sign In</NavLink>
-                            <NavLink to="/SignUP"
+                            <NavLink to="/SignUP" className="hvr-buzz-out"
                             >Sign Up</NavLink>
                         </div>
                     </nav>
