@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 import store from "../store";
 import {
     setDisplayOrderNav,
-    selectDisplayOrderNav,
     setOrderVehicleId,
     setOrderStart,
     setOrderEnd,
@@ -64,6 +63,20 @@ const CarResults = () => {
 
     // Method calculates&returns the orders duration
     // If dates are incorrect redirects to start page
+    const getOrderDuration = () => {
+
+        let orderStart = query.orderStartDate + "T" + query.orderStartTime;
+        let orderEnd = query.orderEndDate + "T" + query.orderEndTime;
+
+        let orderTime;
+        if ((Date.parse(orderEnd) - Date.parse(orderStart)) > 0) {
+            orderTime = Date.parse(orderEnd) - Date.parse(orderStart);
+            //console.log(orderTime)
+        } else {
+            history.push('/Home');
+        }
+        return orderTime / 3600000;
+    }
 
 
     // Method starts order process
@@ -80,22 +93,6 @@ const CarResults = () => {
             + '&orderEndTime=' + orderParams.orderEndTime
             + '&vehicleId=' + vehicleId + '&orderStep=3');
         return true;
-    }
-
-
-    const getOrderDuration = () => {
-
-        let orderStart = query.orderStartDate + "T" + query.orderStartTime;
-        let orderEnd = query.orderEndDate + "T" + query.orderEndTime;
-
-        let orderTime;
-        if ((Date.parse(orderEnd) - Date.parse(orderStart)) > 0) {
-            orderTime = Date.parse(orderEnd) - Date.parse(orderStart);
-            //console.log(orderTime)
-        } else {
-            history.push('/');
-        }
-        return orderTime / 3600000;
     }
 
     return (

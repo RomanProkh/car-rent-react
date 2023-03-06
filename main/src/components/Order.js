@@ -41,6 +41,10 @@ const Order = () => {
     // Fetching vehicles listing data
     useEffect(() => {
 
+        store.dispatch(setOrderStep(query.orderStep))
+        store.dispatch(setDisplayOrderNav(false));
+
+        if (query.orderStep !== '5') {
         let orderStart = new Date(query.orderStartDate.toString() + "T" + query.orderStartTime.toString());
         let orderEnd = new Date(query.orderEndDate.toString() + "T" + query.orderEndTime.toString());
 
@@ -49,6 +53,7 @@ const Order = () => {
             await axios
                 .get("/api/car/" + vehicleId)
                 .then((res) => {
+
                     setVehicle(res.data);
                     store.dispatch(setOrderVehicleSrc(res.data[0].Vehicle_src))
                     store.dispatch(setOrderVehicleId(res.data[0].Vehicle_id))
@@ -61,12 +66,12 @@ const Order = () => {
                 })
                 .catch((err) => console.log(err));
         }
-        vehicleData(query.vehicleId).catch(console.error)
+
+            vehicleData(query.vehicleId).catch(console.error)
 
         // Saving parameters into store
         //this.checkDates();
-
-        store.dispatch(setDisplayOrderNav(true));
+            store.dispatch(setDisplayOrderNav(true));
         store.dispatch(setOrderStart(orderStart.toString()))
         store.dispatch(setOrderEnd(orderEnd.toString()))
         store.dispatch(setOrderStartDate(query.orderStartDate))
@@ -84,8 +89,7 @@ const Order = () => {
         store.dispatch(setOrderPayment(query.orderPayment))
 
 
-        store.dispatch(setOrderStep(query.orderStep))
-
+        }
 
         // if(query.orderStep === '4'){
         //     getOrderSummary();
@@ -105,7 +109,7 @@ const Order = () => {
             orderTime = Date.parse(orderEnd) - Date.parse(orderStart);
             //console.log(orderTime)
         } else {
-            history.push('/');
+            if(query.orderStep !== '5') history.push('/Home');
         }
         return orderTime / 3600000;
     }
@@ -115,7 +119,6 @@ const Order = () => {
 
         let date = new Date();
         let today = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
-        console.log(order.orderFirstName)
         await axios.post('/api/orders/', {
 
             First_name: order.orderFirstName,
@@ -126,7 +129,7 @@ const Order = () => {
             City: order.orderCity,
             Postal_code: order.orderPostalCode,
             Payment: order.orderPayment,
-            Vehicle_id: order.orderVehicleId,
+            Vehicle_id: orderParams.orderVehicleId,
             Date_create: today,
             Order_start: orderParams.orderStartDate + " " + orderParams.orderStartTime,
             Order_end: orderParams.orderEndDate + " " + orderParams.orderEndTime,
@@ -136,6 +139,8 @@ const Order = () => {
                 console.log(response);
                 if (response.status === 200) {
                     console.log("Response 200 OK!");
+                    // Redirect to order confirmation
+                   // history.push('/order?displayOrderNav=0&orderStep=5');
                 }
             })
             .catch(function (error) {
@@ -149,8 +154,7 @@ const Order = () => {
         //         console.log('FAILED...', error.text);
         //     });
 
-        // Redirect to order confirmation
-        history.push('/order?displayOrderNav=0&orderStep=5');
+
     }
 
     // Form validation scheme
@@ -201,7 +205,7 @@ const Order = () => {
                         orderPayment: ''
                     }}
                     onSubmit={(values, {setSubmitting, resetForm}) => {
-                        sendOrder(values)
+                        sendOrder(values).then(r => history.push('/order?displayOrderNav=0&orderStep=5'))
 
                         setSubmitting(false);
                     }}
@@ -368,10 +372,10 @@ const Order = () => {
                 <button onClick={sendOrder}>Lähetä tilaus</button>
             </div>}
             {/* ------------ Tilauksen kuittaus ------------ */}
-            {orderParams.orderStep === '5' && <div id="orderConfirmationContainer">
+            {query.orderStep === '5' && <div id="orderConfirmationContainer">
                 <h1>Order confirmation</h1>
 
-                <button onClick={() => history.push('/')}>Pääsivulle</button>
+                <button onClick={() => history.push('/Home')}>Pääsivulle</button>
 
             </div>}
             {/* ------------ Order confirmation email form ------------ */}

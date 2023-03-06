@@ -10,6 +10,46 @@ let url = require("url");
 const path = require('path');
 const util = require('util');
 
+// For the user authentication
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const secrets = require ('./config/secrets.js')
+require('dotenv').config()
+
+// console.log(process.env)
+// remove this after you've confirmed it is working
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization']
+    const token = authHeader.split(' ')[1]
+
+    console.log(token)
+    let bearerToken;
+
+    let bearerHeader = req.headers["authorization"];
+    //console.log(bearerHeader)
+
+    if (typeof bearerHeader !== 'undefined') {
+
+        let bearer = bearerHeader.split(" ");
+
+        bearerToken = bearer[1];
+        //console.log(bearerToken)
+        req.token = bearerToken;
+    }
+
+    if (token == null) return res.sendStatus(401)
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        console.log(err)
+
+        if (err) return res.sendStatus(403)
+
+        req.user = user
+
+        next()
+    })
+}
+
 let bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -116,7 +156,7 @@ app.post('/api/orders/', async (req, res) =>{
     //     "Order_start         datetime        PATH '$[0].Order_start', " +
     //     "Order_end           datetime        PATH '$[0].Order_end', " +
     //     "Amount              decimal(10,2)   PATH '$[0].Amount')) AS `order`;"
-
+    let result
     try {
         // const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const data = req.body
@@ -131,7 +171,7 @@ app.post('/api/orders/', async (req, res) =>{
             await makeTransaction(db, async () => {
 
                 // INSERT NEW ORDER
-                db.query(sql, [data.First_name, data.Last_name, data.Email, data.Phone_Number, data.Home_address, data.City, data.Postal_code, data.Payment, data.Vehicle_id, data.Date_create, data.Order_start, data.Order_end, data.Amount]).then((result) => insertedLocationId = result.insertId);
+                db.query(sql, [data.First_name, data.Last_name, data.Email, data.Phone_Number, data.Home_address, data.City, data.Postal_code, data.Payment, data.Vehicle_id, data.Date_create, data.Order_start, data.Order_end, data.Amount]).then((result) =>  res.status(200).send("POST was succesful "));
 
             });
         } catch (err) {
