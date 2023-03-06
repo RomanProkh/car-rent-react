@@ -1,7 +1,7 @@
-import React, { useState} from 'react'
+import React from 'react'
 import {
     BrowserRouter as Router,
-    Switch, Route, Link, NavLink
+    Switch, Route, NavLink
 } from 'react-router-dom'
 
 import Home from "./components/Home";
@@ -24,7 +24,7 @@ const App = () => {
                 <div>
                     <nav>
                         <NavbarBrand>
-                            <img src={require('./logo_black.png')} id="logo"/>
+                            <img src={require('./logo_black.png')} alt="logo" id="logo"/>
                         </NavbarBrand>
                         <div>
                             <NavLink to="Home"

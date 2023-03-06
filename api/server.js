@@ -95,82 +95,92 @@ app.get('/api/vehicle_type', cors(), async function (req, res) {
 });
 
 // Tilauksen tekeminen
-app.post('/api/orders/', async function (req, res, url) {
-    let json = JSON.stringify(req.body);
-    let jsonLength = Object.keys(json).length;
+app.post('/api/orders/', async (req, res) =>{
+    // let json = JSON.stringify(req.body);
+    // let jsonLength = Object.keys(json).length;
+    //
+    // let sql = "INSERT INTO `order` (First_name, Last_name, Email, Phone_Number, Home_address," +
+    //     "City,Postal_code,Payment,Vehicle_id, Date_create, Order_start, Order_end, Amount)" +
+    //     "SELECT *" +
+    //     " FROM JSON_TABLE ('" + json + "', '$' COLUMNS ( " +
+    //     "First_name          VARCHAR(45)     PATH '$[0].First_name', " +
+    //     "Last_name           VARCHAR(45)     PATH '$[0].Last_name', " +
+    //     "Email               VARCHAR(45)     PATH '$[0].Email', " +
+    //     "Phone_Number        VARCHAR(13)     PATH '$[0].Phone_Number', " +
+    //     "Home_address        VARCHAR(50)     PATH '$[0].Home_address', " +
+    //     "City                VARCHAR(50)     PATH '$[0].City', " +
+    //     "Postal_code         int(5)          PATH '$[0].Postal_code', " +
+    //     "Payment             VARCHAR(50)     PATH '$[0].Payment', " +
+    //     "Vehicle_id          INT(11)         PATH '$[0].Vehicle_id'," +
+    //     "Date_create         datetime        PATH '$[0].Date_create', " +
+    //     "Order_start         datetime        PATH '$[0].Order_start', " +
+    //     "Order_end           datetime        PATH '$[0].Order_end', " +
+    //     "Amount              decimal(10,2)   PATH '$[0].Amount')) AS `order`;"
 
-    let sql = "INSERT INTO `order` (Personal_id, First_name, Last_name, Email, Phone_Number, Home_address," +
-        "City,Postal_code,Additional_info,Payment,Vehicle_id, Date_create, Order_start, Order_end, Amount)" +
-        "SELECT *" +
-        " FROM JSON_TABLE ('" + json + "', '$' COLUMNS ( " +
-        "Personal_id         VARCHAR(11)     PATH '$[0].Personal_id', " +
-        "First_name          VARCHAR(45)     PATH '$[0].First_name', " +
-        "Last_name           VARCHAR(45)     PATH '$[0].Last_name', " +
-        "Email               VARCHAR(45)     PATH '$[0].Email', " +
-        "Phone_Number        VARCHAR(13)     PATH '$[0].Phone_Number', " +
-        "Home_address        VARCHAR(50)     PATH '$[0].Home_address', " +
-        "City                VARCHAR(50)     PATH '$[0].City', " +
-        "Postal_code         int(5)          PATH '$[0].Postal_code', " +
-        "Additional_info	 TEXT 		     PATH '$[0].Additional_info', " +
-        "Payment             VARCHAR(50)     PATH '$[0].Payment', " +
-        "Vehicle_id          INT(11)         PATH '$[0].Vehicle_id'," +
-        "Date_create         datetime        PATH '$[0].Date_create', " +
-        "Order_start         datetime        PATH '$[0].Order_start', " +
-        "Order_end           datetime        PATH '$[0].Order_end', " +
-        "Amount              decimal(10,2)   PATH '$[0].Amount')) AS `order`;"
-
-    let db = makeDb();
-    let result;
     try {
-        await makeTransaction(db, async () => {
-            result = await db.query(sql);
-        });
-    } catch (err) {
-        console.log(err);
-    }
+        // const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const data = req.body
+        //console.log(hashedPassword)
+        let insertedLocationId;
+        console.log(data)
+        // make updates to the database
+        // if (user.email !== '') { // is  a username present?
+        let sql = "INSERT INTO `order` (First_name, Last_name, Email, Phone_Number, Home_address, City, Postal_code, Payment, Vehicle_id, Date_create, Order_start, Order_end, Amount) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        let db = makeDb();
+        try {
+            await makeTransaction(db, async () => {
 
-    res.send(result);
+                // INSERT NEW ORDER
+                db.query(sql, [data.First_name, data.Last_name, data.Email, data.Phone_Number, data.Home_address, data.City, data.Postal_code, data.Payment, data.Vehicle_id, data.Date_create, data.Order_start, data.Order_end, data.Amount]).then((result) => insertedLocationId = result.insertId);
+
+            });
+        } catch (err) {
+            res.status(400).send("POST was not succesful ");
+        }
+        // }
+    } catch (e) {
+        res.json({message: "Error"});
+    }
 
     // Tilausvahvistuksen lähetys asiakkaan sähköpostille
     // Ylläpitäjälle tilaus lähetetään front-end puolella
-    let nodemailer = require('nodemailer')
-
-    let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'car.rent.websowellus',
-            pass: 'mika72361400'
-        }
-    });
-
-    let mailOptions = {
-        from: 'car.rent.websowellus@gmail.com',
-        to: req.body.Email,
-        subject: 'Tilauksen vahvistus',
-        text: '',
-        html: '<h1>Tilausvahvistus</h1>' +
-            '      <h4>Tilauksen tiedot</h4>' +
-            '      <p>Tilauksen alku: ' + req.body.Order_start + '</p>' +
-            '      <p>Tilauksen loppu: ' + req.body.Order_end + '</p>' +
-            '      <p>Tilauksen summa: ' + req.body.Amount + '</p>' +
-            '      <p>Tilauksen auton ID: ' + req.body.Vehicle_id + '</p>' +
-            '      <h4>Tilaajan tiedot</h4>' +
-            '      <p>Nimi: ' + req.body.First_name + ' ' + req.body.Last_name + '</p>' +
-            '      <p>Sähköpostiosoite: ' + req.body.Email + '</p>' +
-            '      <p>Puhelinnumero: ' + req.body.Phone_Number + '</p>' +
-            '      <p>Lähiosoite: ' + req.body.Home_address + '</p>' +
-            '      <p>Postitoimipaikka: ' + req.body.Postal_code + '</p>' +
-            '      <p>Lisätiedot: ' + req.body.Additional_info + '</p>' +
-            '      <p>Maksutapa: ' + req.body.Payment + '</p>'
-    };
-
-    transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
+    // let nodemailer = require('nodemailer')
+    //
+    // let transporter = nodemailer.createTransport({
+    //     service: 'gmail',
+    //     auth: {
+    //         user: 'car.rent.websowellus',
+    //         pass: 'mika72361400'
+    //     }
+    // });
+    //
+    // let mailOptions = {
+    //     from: 'car.rent.websowellus@gmail.com',
+    //     to: req.body.Email,
+    //     subject: 'Tilauksen vahvistus',
+    //     text: '',
+    //     html: '<h1>Tilausvahvistus</h1>' +
+    //         '      <h4>Tilauksen tiedot</h4>' +
+    //         '      <p>Tilauksen alku: ' + req.body.Order_start + '</p>' +
+    //         '      <p>Tilauksen loppu: ' + req.body.Order_end + '</p>' +
+    //         '      <p>Tilauksen summa: ' + req.body.Amount + '</p>' +
+    //         '      <p>Tilauksen auton ID: ' + req.body.Vehicle_id + '</p>' +
+    //         '      <h4>Tilaajan tiedot</h4>' +
+    //         '      <p>Nimi: ' + req.body.First_name + ' ' + req.body.Last_name + '</p>' +
+    //         '      <p>Sähköpostiosoite: ' + req.body.Email + '</p>' +
+    //         '      <p>Puhelinnumero: ' + req.body.Phone_Number + '</p>' +
+    //         '      <p>Lähiosoite: ' + req.body.Home_address + '</p>' +
+    //         '      <p>Postitoimipaikka: ' + req.body.Postal_code + '</p>' +
+    //         '      <p>Maksutapa: ' + req.body.Payment + '</p>'
+    // };
+    //
+    // transporter.sendMail(mailOptions, function(error, info){
+    //     if (error) {
+    //         console.log(error);
+    //     } else {
+    //         console.log('Email sent: ' + info.response);
+    //     }
+    // });
 
 })
 
