@@ -28,10 +28,18 @@
   transform: scale(1.1);
 }
 
+.homePageSingleCardContainer:hover h4{
+  background-color: red;
+}
+
+.homePageSingleCardContainer:hover button{
+  background-color: #ff3939;
+}
+
 .btn-primary:hover {
   color: #fff;
-  background-color: red;
-  border-color: red;
+  background-color: #ff3939;
+  border-color: #ff3939;
 }
 
 /* Shrink */
