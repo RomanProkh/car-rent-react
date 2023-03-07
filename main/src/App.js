@@ -14,11 +14,11 @@ import Order from "./components/Order";
 import{useDispatch, useSelector} from 'react-redux';
 import {selectDisplayOrderNav} from "./store/order";
 import {Button, NavbarBrand} from "react-bootstrap";
-import SignUp from "./components/SignUp";
-import SignIn from "./components/SignIn";
-import user, {logout} from "./store/user";
+import {logout} from "./store/user";
 import store from "./store";
 import UserProfile from "./components/UserProfile";
+import SignUp from "./components/SignUp";
+import SignIn from "./components/SignIn";
 
 const App = () => {
 
@@ -65,9 +65,9 @@ const App = () => {
                     <Route exact path="/SignUp">
                         <SignUp/>
                     </Route>
-                        <Route exact path="/UserProfile">
-                            <UserProfile/>
-                        </Route>
+                    <Route exact path="/UserProfile">
+                        <UserProfile/>
+                    </Route>
                     <Route exact path="/SignIn">
                         <SignIn/>
                     </Route>

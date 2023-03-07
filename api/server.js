@@ -62,7 +62,7 @@ app.use(function (req, res, next) {
 
 let urlencodedParser = bodyParser.urlencoded({extended: false});
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 // Vapaat autot tietyllä aikavälillä
@@ -235,13 +235,23 @@ app.post('/api/signup/', async (req, res) => {
 });
 
 // User login
-app.post('/api/signin', urlencodedParser, async (req, res) => {
+app.post('/api/signin', async (req, res) => {
     let user = req.body
-    //console.log(user)
+
+    console.log(req.body)
     try {
         // Try to obtain a given account password from the database to compare
         let dbUserPassword = ''
-        let sql = "SELECT username, email, password, COUNT(password) AS rows_found " +
+        let dbUserName = ''
+        let dbUserEmail = ''
+        let dbUserId = ''
+        let dbUserFirstName = ''
+        let dbUserLastName = ''
+        let dbUserPhoneNumber = ''
+        let dbUserHomeAddress = ''
+        let dbUserCity = ''
+        let dbUserPostalCode = ''
+        let sql = "SELECT username, email, password, user_id, first_name, last_name, phone_number, home_address, city, postal_code, COUNT(password) AS rows_found " +
             " FROM `user` WHERE email = ? "
 
         let db = makeDb()
@@ -249,7 +259,18 @@ app.post('/api/signin', urlencodedParser, async (req, res) => {
             await makeTransaction(db, async () => {
                 await db.query(sql, [user.email]).then((result) => {
                     // If user data found from the database
-                    dbUserPassword = result[0].rows_found === 1 ? result[0].password : null
+                    if(result[0].rows_found === 1){
+                        dbUserName =  result[0].username
+                        dbUserEmail =  result[0].email
+                        dbUserPassword =  result[0].password
+                        dbUserId = result[0].user_id
+                        dbUserFirstName = result[0].first_name
+                        dbUserLastName = result[0].last_name
+                        dbUserPhoneNumber = result[0].phone_number
+                        dbUserHomeAddress = result[0].home_address
+                        dbUserCity = result[0].city
+                        dbUserPostalCode = result[0].postal_code
+                    }
                 });
                 //console.log(dbUserPassword)
             });
@@ -266,6 +287,15 @@ app.post('/api/signin', urlencodedParser, async (req, res) => {
                     console.log("Passwords matched")
                     res.json({
                         accessToken: accessToken,
+                        username: dbUserName,
+                        email: dbUserEmail,
+                        id: dbUserId,
+                        firstName: dbUserFirstName,
+                        lastName: dbUserLastName,
+                        phoneNumber: dbUserPhoneNumber,
+                        homeAddress: dbUserHomeAddress,
+                        city: dbUserCity,
+                        postalCode: dbUserPostalCode,
                         message: "User Identified"
                     });
                 } else {
@@ -331,6 +361,10 @@ app.get('/api/usernames', cors(), async function (req, res) {
 
     res.send(rowsFound);
 })
+
+
+
+
 
 
 // ---------------------- YHTEYDET ----------------------------------------- //
