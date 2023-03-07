@@ -19,21 +19,23 @@ require('dotenv').config()
 // console.log(process.env)
 // remove this after you've confirmed it is working
 function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization']
+
+   // console.log(req.headers['authorization'])
+     const authHeader = req.headers['authorization']
     const token = authHeader.split(' ')[1]
 
-    console.log(token)
+    //console.log(token)
     let bearerToken;
 
     let bearerHeader = req.headers["authorization"];
-    //console.log(bearerHeader)
+   // console.log(req.headers)
 
     if (typeof bearerHeader !== 'undefined') {
 
         let bearer = bearerHeader.split(" ");
 
         bearerToken = bearer[1];
-        //console.log(bearerToken)
+        console.log(bearerToken)
         req.token = bearerToken;
     }
 
@@ -62,7 +64,7 @@ app.use(function (req, res, next) {
 
 let urlencodedParser = bodyParser.urlencoded({extended: false});
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 // Vapaat autot tietyllä aikavälillä
@@ -363,7 +365,51 @@ app.get('/api/usernames', cors(), async function (req, res) {
 })
 
 
+// Add new event
+app.post('/api/user', authenticateToken,  async (req, res) => {
+    //console.log(req.body)
+    let result;
+    try {
+        // const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        // const user = req.body
+        // console.log(req.body.email)
+        let userEmail = req.body.email
 
+        // Get user data from the database
+
+        // Check if email is present in the database
+        let rowsFound = {
+            email: false
+        }
+        let sqlCheckEmail = "SELECT COUNT(email) AS rows_found" +
+            " FROM `user` WHERE email = ? "
+        try {
+            // Check email
+            if (userEmail !== '') {
+                let db = makeDb();
+                await makeTransaction(db, async () => {
+                    await db.query(sqlCheckEmail, [userEmail]).then((result) => rowsFound.email = result[0].rows_found > 0 ? true : false);
+                });
+            }
+        } catch (err) {
+            console.log(err);
+        }
+
+        // if email founded
+        if(rowsFound.email){
+            let sql = "SELECT user_id, username, email, date_create, first_name, last_name, phone_number, home_address, city, postal_code " +
+                "FROM `user` WHERE email = ?"
+            let db = makeDb();
+            await makeTransaction(db, async ()=>{
+                result = await db.query(sql, userEmail)
+            })
+        }
+
+    } catch (e) {
+        res.json({message: "Error"});
+    }
+    res.send(result)
+});
 
 
 
