@@ -76,7 +76,7 @@ app.get('/api/cars', cors(), async function (req, res) {
 
     let sql = "SELECT vehicle.Vehicle_id, vehicle_type.Type_name, Vehicle_model, Reg_number, Price, Vehicle_descr, Vehicle_src" +
         " FROM `vehicle`" +
-        " LEFT JOIN `order` ON vehicle.Vehicle_id='order.Vehicle_id'" +
+        " LEFT JOIN `order` ON vehicle.Vehicle_id=`order`.`Vehicle_id`" +
         " LEFT JOIN `vehicle_type` ON vehicle.Vehicle_type=vehicle_type.Type_id" +
         " WHERE (vehicle.vehicle_type='" + type + "' AND order.Order_end <= '" + startDate + "')" +
         " OR (vehicle.vehicle_type='" + type + "' AND order.Order_start >= '" + endDate + "')" +

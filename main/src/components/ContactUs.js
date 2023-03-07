@@ -11,6 +11,7 @@ const ContactUs = () => {
         initialValues: {
             name: '',
             email: '',
+            subject: '',
             message: ''
         },
         validationSchema: Yup.object({
@@ -19,6 +20,8 @@ const ContactUs = () => {
                 .required("Pakollinen kenttä"),
             email: Yup.string()
                 .email("Virheellinen sähköpostiosoite")
+                .required("Pakollinen kenttä"),
+            subject: Yup.string()
                 .required("Pakollinen kenttä"),
             message: Yup.string()
                 .max(45, "Viestin on oltava max. 1000 merkkia pituinen")
@@ -30,31 +33,54 @@ const ContactUs = () => {
     })
 
     return (
-        <form onSubmit={formik.handleSubmit}>
-            <input
-                id="name"
-                name="name"
-                type="text"
-                placeholder="Nimesi"
-                onChange={formik.handleChange}
-                // getting touched property
-                onBlur={formik.handleBlur}
-                value={formik.values.name}
-            />
-            {/*if the name field has been touched(clicked) and there is
+        <div className="contactUsMainDiv">
+            <h2>Onko kysyttävää?</h2>
+            <h3>Laita viestisi ja vastaamme siihen mahdollisimman pian</h3>
+            <form onSubmit={formik.handleSubmit} className="contactUs">
+                <div id="flexRows">
+                    <div id="gridContainer">
+                        <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            placeholder="Nimesi"
+                            onChange={formik.handleChange}
+                            // getting touched property
+                            onBlur={formik.handleBlur}
+                            value={formik.values.name}
+                        />
+                        {/*if the name field has been touched(clicked) and there is
              some validation errors, display <p>, else display null*/}
-            {formik.touched.name && formik.errors.name ? <p>{formik.errors.name}</p> : null}
-            <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="Sähköpostiosoitteesi"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                value={formik.values.email}
-            />
-            {formik.touched.email && formik.errors.email ? <p>{formik.errors.email}</p> : null}
+                        {formik.touched.name && formik.errors.name ? <p>{formik.errors.name}</p> : null}
+                    </div>
+                    <div id="gridContainer">
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="Sähköpostiosoitteesi"
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            value={formik.values.email}
+                        />
+                        {formik.touched.email && formik.errors.email ? <p>{formik.errors.email}</p> : null}
+                    </div>
+                </div>
+
+                <input
+                    id="subject"
+                    name="subject"
+                    type="text"
+                    placeholder="Aihe"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.subject}
+                />
+                {formik.touched.subject && formik.errors.subject ? <p>{formik.errors.subject}</p> : null}
+                <div>
             <textarea
+                rows="10"
+                cols="50"
                 id="message"
                 name="message"
                 placeholder="Viestisi"
@@ -62,9 +88,11 @@ const ContactUs = () => {
                 onChange={formik.handleChange}
                 value={formik.values.message}
             />
-            {formik.touched.message && formik.errors.message ? <p>{formik.errors.message}</p> : null}
-            <button type="submit">Lähetä</button>
-        </form>
+                    {formik.touched.message && formik.errors.message ? <p>{formik.errors.message}</p> : null}
+                </div>
+                <button type="submit" className="hvr-pulse">Lähetä</button>
+            </form>
+        </div>
     )
 }
 export default ContactUs

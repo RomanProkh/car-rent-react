@@ -312,6 +312,53 @@ figcaption {
   justify-content: space-around;
 }
 
+.contactUsMainDiv{
+  margin: 3% auto;
+  text-align: center;
+}
+
+.contactUs {
+  margin: 3% auto;
+  width: 38%;
+  display: grid;
+  flex-direction: column;
+  gap: 5%;
+}
+
+.contactUs #flexRows{
+  display: flex;
+  justify-content: space-between;
+}
+
+.contactUs #gridContainer{
+  display: grid;
+  width: 47%;
+}
+
+.contactUs textarea{
+  width: 100%;
+  border-radius: 5px;
+}
+
+.contactUs p{
+  color: red;
+  margin: 0;
+}
+
+.contactUs input{
+  border-radius: 5px;
+  height: fit-content;
+}
+
+.contactUs #subject{
+  width: 100%;
+}
+
+.contactUs button{
+  width: fit-content;
+  margin: auto;
+}
+
 #vehicleInfoContainer {
   display: block;
   flex-wrap: wrap;
