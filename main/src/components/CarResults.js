@@ -98,7 +98,7 @@ const CarResults = () => {
     return (
         <div className="container">
             <div className="carList">
-                {user && <ul className="card">
+                <ul className="card">
                     {vehicles.map((option, index) => (
                         <div className="homePageSingleCardContainer hvr-grow" onClick={() => makeOrder(option.Vehicle_id)}>
                             <h4>{option.Vehicle_model}</h4>
@@ -116,26 +116,7 @@ const CarResults = () => {
                             </div>
                             <button>Tilaa</button>
                         </div>))}
-                </ul>}
-                {!user && <ul className="card">
-                    {vehicles.map((option, index) => (
-                <div className="homePageSingleCardContainer hvr-grow" onClick={() => history.push('/SignIn')}>
-                    <h4>{option.Vehicle_model}</h4>
-                    <img src={require("../assets/cars/" + option.Vehicle_src)} alt={option.Vehicle_model}/>
-                    <div className="homePageCardDesc">
-                        <p>{option.Vehicle_descr}</p>
-                        <ul id="special">
-                            <li>
-                                Hinta/tunti <b>{option.Price} €</b>
-                            </li>
-                            <li>
-                                Kokonaishinta <b>{(option.Price * getOrderDuration()).toFixed(2)} €</b>
-                            </li>
-                        </ul>
-                    </div>
-                    {!user && <button on>Kirjaudu</button> }{!user && <a href="">Rekisteröydy</a>}
-                </div>))}
-            </ul>}
+                </ul>
             </div>
         </div>
     )
