@@ -40,8 +40,8 @@ const App = () => {
                             >Ota yhteyttä </NavLink>
                         </div>
                         <div>
-                            {/*{user && <NavLink to="/UserProfile" className="hvr-buzz-out">Profile</NavLink>}*/}
-                            {/*{user && <Button onClick={()=> store.dispatch(logout())}>Logout</Button>}*/}
+                            {user && <NavLink to="/UserProfile" className="hvr-buzz-out">Profile</NavLink>}
+                            {user && <Button onClick={()=> store.dispatch(logout())}>Logout</Button>}
                             {!user && <NavLink to="/SignIn" className="hvr-buzz-out">Sign In</NavLink>}
                             {!user && <NavLink to="/SignUp" className="hvr-buzz-out">Sign Up</NavLink>}
                         </div>
