@@ -18,74 +18,65 @@ const Home = () => {
         <div className="container" id="homePageBorderContainer">
             <SearchForm/>
             <div className="homePageModelContainer">
-                <h1>Model Comparison</h1>
-                <p>To find the right model for you, first choose the car you're interested in.</p>
-                <p>Then select up to three models to review and easily compare their features.</p>
+                <h1>Mikä auto sopii sinulle?</h1>
+                <p>On tärkeää löytää juuri sinulle sopiva auto. </p>
+                <p>Meiltä löydät autot jokaiseen käyttötarkoitukseen.</p>
                 <div className="homePageAllCardsContainer">
                     <div className="homePageSingleCardContainer hvr-grow">
-                        <h3>Outlander</h3>
+                        <h3>Pakettiauto</h3>
                         <img alt="" className="u-expanded-width u-image u-image-default u-image-1"
-                             src="//images03.nicepage.com/c461c07a441a5d220e8feb1a/e86caee8c8095f8581913c7a/Untitled-1.jpg"/>
+                             src={require("../assets/cars/ford_transit.jpg")}/>
                         <div className="homePageCardDesc">
-                            <p>Starting at <b>24,000$</b></p>
+                            <p>Alkaen <b>15€/tunti</b></p>
                             <ul>
                                 <li>
-                                    5/7 seats
+                                    3 matkustajaa
                                 </li>
                                 <li>
-                                    Something else
+                                    Tavaratila 7-15 m³
                                 </li>
                                 <li>
-                                    Something else
-                                </li>
-                                <li>
-                                    Something else
+                                    B-luokan ajoneuvo
                                 </li>
                             </ul>
                             <button>Learn More</button>
                         </div>
                     </div>
                     <div className="homePageSingleCardContainer hvr-grow">
-                        <h3 id="redBackground">Outlander</h3>
+                        <h3 id="redBackground">Henkilöauto</h3>
                         <img alt="" className="u-expanded-width u-image u-image-default u-image-1"
-                             src="//images03.nicepage.com/c461c07a441a5d220e8feb1a/e86caee8c8095f8581913c7a/Untitled-1.jpg"/>
+                             src={require("../assets/cars/honda_civic.png")}/>
                         <div className="homePageCardDesc">
-                            <p>Starting at <b>24,000$</b></p>
+                            <p>Alkaen <b>7€/tunti</b></p>
                             <ul>
                                 <li>
-                                    5/7 seats
+                                    5-7 matkustajaa
                                 </li>
                                 <li>
-                                    Something else
+                                    Sopii arkikäyttöön
                                 </li>
                                 <li>
-                                    Something else
-                                </li>
-                                <li>
-                                    Something else
+                                    B-luokan ajoneuvo
                                 </li>
                             </ul>
                             <button>Learn More</button>
                         </div>
                     </div>
                     <div className="homePageSingleCardContainer hvr-grow">
-                        <h3>Outlander</h3>
+                        <h3>Matkailuauto</h3>
                         <img alt="" className="u-expanded-width u-image u-image-default u-image-1"
-                             src="//images03.nicepage.com/c461c07a441a5d220e8feb1a/e86caee8c8095f8581913c7a/Untitled-1.jpg"/>
+                             src={require("../assets/cars/camper_van.png")}/>
                         <div className="homePageCardDesc">
-                            <p>Starting at <b>24,000$</b></p>
+                            <p>Alkaen <b>20€/tunti</b></p>
                             <ul>
                                 <li>
-                                    5/7 seats
+                                    5-7 matkustajaa
                                 </li>
                                 <li>
-                                    Something else
+                                    Sopii matkailuun
                                 </li>
                                 <li>
-                                    Something else
-                                </li>
-                                <li>
-                                    Something else
+                                    M-luokan ajoneuvo
                                 </li>
                             </ul>
                             <button>Learn More</button>
