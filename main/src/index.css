@@ -174,7 +174,7 @@ footer h2 {
 }
 .navStepContainer{
   margin: 0.5%;
-  padding: 1% 2%;
+  padding: 2% 1%;
   text-align: left;
 }
 .navStepInfo{
@@ -316,7 +316,7 @@ figcaption {
   display: block;
   flex-wrap: wrap;
   margin: 0 auto;
-  padding: 4% 0px;
+  padding: 1% 0px;
 }
 .orderFormTxt {
   width: 48%;
@@ -329,19 +329,21 @@ figcaption {
   font-size: 14px;
 }
 #orderInfoContainer{
-  display: flex;
-  flex-wrap: wrap;
+  text-align: center;
+  width: 60%;
+  border: solid 2px gray;
+  padding: 2%;
+}
+.orderInfo{
+  text-align: left;
+  margin: 5% auto;
+}
+.orderInfo h4{
   padding-bottom: 2%;
 }
-#orderInfo{
+#orderDetails{
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: auto;
-  margin-right: 3%;
-}
-#orderInfo h4{
-  align-self: center;
+  justify-content: space-between;
 }
 #customerInfo{
   display: flex;
@@ -381,9 +383,14 @@ figcaption {
   border-style: none;
 }
 
+#orderConfirmationContainer{
+  text-align: center;
+}
+
 .orderViewContainer {
   display: flex;
   margin: 5% auto;
+  justify-content: center;
 }
 
 .vehicleImageContainer {
@@ -409,6 +416,7 @@ figcaption {
 
 }
 
+
 label {
   float: left;
 }
@@ -428,16 +436,17 @@ input[type=submit]:hover {
 }
 
 button {
-  background-color: var(--green);
+  background-color: red;
   color: white;
   padding: 12px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 15px;
   cursor: pointer;
   margin: 3% 0;
 }
+
 button:hover{
-  background-color: var(--dark-green);
+  background-color: #ff3939;
 }
 
 .order-nav{

@@ -82,8 +82,8 @@
 .hvr-pulse:hover, .hvr-pulse:focus, .hvr-pulse:active {
   -webkit-animation-name: hvr-pulse;
   animation-name: hvr-pulse;
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
   -webkit-animation-timing-function: linear;
   animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;

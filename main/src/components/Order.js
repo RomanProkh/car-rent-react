@@ -43,52 +43,51 @@ const Order = () => {
     useEffect(() => {
 
 
-
         if (orderParams.orderStep < 4) {
             store.dispatch(setOrderStep(query.orderStep))
             store.dispatch(setDisplayOrderNav(false));
-        let orderStart = new Date(query.orderStartDate.toString() + "T" + query.orderStartTime.toString());
-        let orderEnd = new Date(query.orderEndDate.toString() + "T" + query.orderEndTime.toString());
+            let orderStart = new Date(query.orderStartDate.toString() + "T" + query.orderStartTime.toString());
+            let orderEnd = new Date(query.orderEndDate.toString() + "T" + query.orderEndTime.toString());
 
-        // Method returns vehicle's data by id
-        const vehicleData = async (vehicleId) => {
-            await axios
-                .get("/api/car/" + vehicleId)
-                .then((res) => {
+            // Method returns vehicle's data by id
+            const vehicleData = async (vehicleId) => {
+                await axios
+                    .get("/api/car/" + vehicleId)
+                    .then((res) => {
 
-                    setVehicle(res.data);
-                    store.dispatch(setOrderVehicleSrc(res.data[0].Vehicle_src))
-                    store.dispatch(setOrderVehicleId(res.data[0].Vehicle_id))
-                    store.dispatch(setOrderVehicleType(res.data[0].Type_name))
-                    store.dispatch(setOrderVehicleModel(res.data[0].Vehicle_model))
+                        setVehicle(res.data);
+                        store.dispatch(setOrderVehicleSrc(res.data[0].Vehicle_src))
+                        store.dispatch(setOrderVehicleId(res.data[0].Vehicle_id))
+                        store.dispatch(setOrderVehicleType(res.data[0].Type_name))
+                        store.dispatch(setOrderVehicleModel(res.data[0].Vehicle_model))
 
-                    store.dispatch(setOrderVehiclePrice(res.data[0].Price))
-                    store.dispatch(setOrderAmount(res.data[0].Price * getOrderDuration()))
+                        store.dispatch(setOrderVehiclePrice(res.data[0].Price))
+                        store.dispatch(setOrderAmount(res.data[0].Price * getOrderDuration()))
 
-                })
-                .catch((err) => console.log(err));
-        }
+                    })
+                    .catch((err) => console.log(err));
+            }
 
             vehicleData(query.vehicleId).catch(console.error)
 
-        // Saving parameters into store
-        //this.checkDates();
+            // Saving parameters into store
+            //this.checkDates();
             store.dispatch(setDisplayOrderNav(true));
-        store.dispatch(setOrderStart(orderStart.toString()))
-        store.dispatch(setOrderEnd(orderEnd.toString()))
-        store.dispatch(setOrderStartDate(query.orderStartDate))
-        store.dispatch(setOrderEndDate(query.orderEndDate))
-        store.dispatch(setOrderStartTime(query.orderStartTime))
-        store.dispatch(setOrderEndTime(query.orderEndTime))
-        store.dispatch(setOrderVehicleId(query.vehicleId))
-        // store.dispatch(setOrderFirstName(query.orderFirstName))
-        // store.dispatch(setOrderLastName(query.orderLastName))
-        // store.dispatch(setOrderEmail(query.orderEmail))
-        // store.dispatch(setOrderPhoneNumber(query.orderPhoneNumber))
-        // store.dispatch(setOrderHomeAddress(query.orderHomeAddress))
-        // store.dispatch(setOrderCity(query.orderCity))
-        // store.dispatch(setOrderPostalCode(query.orderPostalCode))
-        // store.dispatch(setOrderPayment(query.orderPayment))
+            store.dispatch(setOrderStart(orderStart.toString()))
+            store.dispatch(setOrderEnd(orderEnd.toString()))
+            store.dispatch(setOrderStartDate(query.orderStartDate))
+            store.dispatch(setOrderEndDate(query.orderEndDate))
+            store.dispatch(setOrderStartTime(query.orderStartTime))
+            store.dispatch(setOrderEndTime(query.orderEndTime))
+            store.dispatch(setOrderVehicleId(query.vehicleId))
+            // store.dispatch(setOrderFirstName(query.orderFirstName))
+            // store.dispatch(setOrderLastName(query.orderLastName))
+            // store.dispatch(setOrderEmail(query.orderEmail))
+            // store.dispatch(setOrderPhoneNumber(query.orderPhoneNumber))
+            // store.dispatch(setOrderHomeAddress(query.orderHomeAddress))
+            // store.dispatch(setOrderCity(query.orderCity))
+            // store.dispatch(setOrderPostalCode(query.orderPostalCode))
+            // store.dispatch(setOrderPayment(query.orderPayment))
 
 
         }
@@ -107,31 +106,31 @@ const Order = () => {
             orderTime = Date.parse(orderEnd) - Date.parse(orderStart);
             //console.log(orderTime)
         } else {
-            if(query.orderStep !== '5') history.push('/');
+            if (query.orderStep !== '5') history.push('/');
         }
         return orderTime / 3600000;
     }
 
-    const orderSummary = (order) =>{
+    const orderSummary = (order) => {
 
         store.dispatch(setOrderStep('4'))
         let date = new Date();
         let today = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
 
         setOrder({
-            First_name: order.orderFirstName,
-            Last_name: order.orderLastName,
-            Email: order.orderEmail,
-            Phone_Number: order.orderPhoneNumber,
-            Home_address: order.orderHomeAddress,
-            City: order.orderCity,
-            Postal_code: order.orderPostalCode,
-            Payment: order.orderPayment,
-            Vehicle_id: orderParams.orderVehicleId,
-            Date_create: today,
-            Order_start: orderParams.orderStartDate + " " + orderParams.orderStartTime,
-            Order_end: orderParams.orderEndDate + " " + orderParams.orderEndTime,
-            Amount: orderParams.orderAmount
+                First_name: order.orderFirstName,
+                Last_name: order.orderLastName,
+                Email: order.orderEmail,
+                Phone_Number: order.orderPhoneNumber,
+                Home_address: order.orderHomeAddress,
+                City: order.orderCity,
+                Postal_code: order.orderPostalCode,
+                Payment: order.orderPayment,
+                Vehicle_id: orderParams.orderVehicleId,
+                Date_create: today,
+                Order_start: orderParams.orderStartDate + " " + orderParams.orderStartTime,
+                Order_end: orderParams.orderEndDate + " " + orderParams.orderEndTime,
+                Amount: orderParams.orderAmount
             }
         )
 
@@ -398,29 +397,59 @@ const Order = () => {
             {/* ------------Vaihe 4. Tilauksen yhteenveto ------------ */}
             {orderParams.orderStep === '4' && <div id="orderInfoContainer">
                 <h1>Tilauksen yhteenveto</h1>
-                <div id="orderInfo">
+                <div className="orderInfo">
                     <h4>Tilauksen tiedot</h4>
-                    <p>Tilauksen alku: {orderParams.orderStart}</p>
-                    <p>Tilauksen loppu: {orderParams.orderEnd}</p>
-                    <p>Tilauksen summa: {orderParams.orderAmount} €</p>
-                    <p>Tilauksen auton ID: {orderParams.orderVehicleId}</p>
+                    <div id="orderDetails">
+                        <p><b>Tilauksen alku:</b></p>
+                        <p>{orderParams.orderStart}</p>
+                    </div>
+                    <div id="orderDetails">
+                        <p><b>Tilauksen loppu:</b></p>
+                        <p>{orderParams.orderEnd}</p>
+                    </div>
+                    <div id="orderDetails">
+                        <p><b>Tilauksen summa:</b></p>
+                        <p>{orderParams.orderAmount} €</p>
+                    </div>
+                    <div id="orderDetails">
+                        <p><b>Tilauksen auton ID:</b></p>
+                        <p>{orderParams.orderVehicleId}</p>
+                    </div>
                 </div>
-                <div id="customerInfo">
+                <div className="orderInfo">
                     <h4>Tilaajan tiedot</h4>
-                    <p>Nimi: {orderParams.orderFirstName} {orderParams.orderLastName}</p>
-                    <p>Sähköpostiosoite: {orderParams.orderEmail}</p>
-                    <p>Puhelinnumero: {orderParams.orderPhoneNumber}</p>
-                    <p>Lähiosoite: {orderParams.orderHomeAddress}</p>
-                    <p>Postitoimipaikka: {orderParams.orderCity}</p>
-                    <p>Maksutapa: {orderParams.orderPayment}</p>
+                    <div id="orderDetails">
+                        <p><b>Nimi:</b></p>
+                        <p>{orderParams.orderFirstName} {orderParams.orderLastName}</p>
+                    </div>
+                    <div id="orderDetails">
+                        <p><b>Sähköpostiosoite:</b></p>
+                        <p>{orderParams.orderEmail}</p>
+                    </div>
+                    <div id="orderDetails">
+                        <p><b>Puhelinnumero:</b></p>
+                        <p>{orderParams.orderPhoneNumber}</p>
+                    </div>
+                    <div id="orderDetails">
+                        <p><b>Lähiosoite:</b></p>
+                        <p>{orderParams.orderHomeAddress}</p>
+                    </div>
+                    <div id="orderDetails">
+                        <p><b>Postitoimipaikka:</b></p>
+                        <p>{orderParams.orderCity}</p>
+                    </div>
+                    <div id="orderDetails">
+                        <p><b>Maksutapa:</b></p>
+                        <p>{orderParams.orderPayment}</p>
+                    </div>
                 </div>
-                <button onClick={sendOrder}>Lähetä tilaus</button>
+                <button className="hvr-pulse" onClick={sendOrder}>Lähetä tilaus</button>
             </div>}
             {/* ------------ Tilauksen kuittaus ------------ */}
             {orderParams.orderStep === '5' && <div id="orderConfirmationContainer">
-                <h1>Order confirmation</h1>
-
-                <button onClick={() => history.push('/Home')}>Pääsivulle</button>
+                <h2>Kiitos tilauksestasi!</h2>
+                <p>Tilausvahvistus on lähetetty sähköpostiosoitteeseen <b>{orderParams.orderEmail}</b></p>
+                <button onClick={() => history.push('/')}>Pääsivulle</button>
 
             </div>}
             {/* ------------ Order confirmation email form ------------ */}
