@@ -17,6 +17,7 @@ const slice = createSlice({
             orderStartTime: '',
             orderEndTime: '',
             orderVehicleId: '',
+            orderVehicleTypeId: '',
             orderVehicleType: '',
             orderVehicleModel: '',
             orderVehicleSrc: '',
@@ -27,6 +28,7 @@ const slice = createSlice({
             orderEmail: '',
             orderPhoneNumber: '',
             orderHomeAddress: '',
+            orderCity: '',
             orderPostalCode: '',
             orderPayment: ''
 
@@ -63,6 +65,9 @@ const slice = createSlice({
         },
         setOrderVehicleId: (state, action) =>{
             state.orderParams.orderVehicleId = action.payload;
+        },
+        setOrderVehicleTypeId: (state, action) =>{
+            state.orderParams.orderVehicleTypeId = action.payload;
         },
         setOrderVehicleType: (state, action) =>{
             state.orderParams.orderVehicleType = action.payload;
@@ -118,6 +123,7 @@ export const { setOrderEndDate } = slice.actions
 export const { setOrderStartTime } = slice.actions
 export const { setOrderEndTime } = slice.actions
 export const { setOrderVehicleId } = slice.actions
+export const { setOrderVehicleTypeId } = slice.actions
 export const { setOrderVehicleType } = slice.actions
 export const { setOrderVehicleModel } = slice.actions
 export const { setOrderVehicleSrc } = slice.actions

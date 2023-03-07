@@ -64,30 +64,30 @@ const Order = () => {
                         store.dispatch(setOrderVehiclePrice(res.data[0].Price))
                         store.dispatch(setOrderAmount(res.data[0].Price * getOrderDuration()))
 
-                    })
-                    .catch((err) => console.log(err));
-            }
+                })
+                .catch((err) => console.log(err));
+        }
 
             vehicleData(query.vehicleId).catch(console.error)
 
-            // Saving parameters into store
-            //this.checkDates();
+        // Saving parameters into store
+        //this.checkDates();
             store.dispatch(setDisplayOrderNav(true));
-            store.dispatch(setOrderStart(orderStart.toString()))
-            store.dispatch(setOrderEnd(orderEnd.toString()))
-            store.dispatch(setOrderStartDate(query.orderStartDate))
-            store.dispatch(setOrderEndDate(query.orderEndDate))
-            store.dispatch(setOrderStartTime(query.orderStartTime))
-            store.dispatch(setOrderEndTime(query.orderEndTime))
-            store.dispatch(setOrderVehicleId(query.vehicleId))
-            // store.dispatch(setOrderFirstName(query.orderFirstName))
-            // store.dispatch(setOrderLastName(query.orderLastName))
-            // store.dispatch(setOrderEmail(query.orderEmail))
-            // store.dispatch(setOrderPhoneNumber(query.orderPhoneNumber))
-            // store.dispatch(setOrderHomeAddress(query.orderHomeAddress))
-            // store.dispatch(setOrderCity(query.orderCity))
-            // store.dispatch(setOrderPostalCode(query.orderPostalCode))
-            // store.dispatch(setOrderPayment(query.orderPayment))
+        store.dispatch(setOrderStart(orderStart.toString()))
+        store.dispatch(setOrderEnd(orderEnd.toString()))
+        store.dispatch(setOrderStartDate(query.orderStartDate))
+        store.dispatch(setOrderEndDate(query.orderEndDate))
+        store.dispatch(setOrderStartTime(query.orderStartTime))
+        store.dispatch(setOrderEndTime(query.orderEndTime))
+        store.dispatch(setOrderVehicleId(query.vehicleId))
+        // store.dispatch(setOrderFirstName(query.orderFirstName))
+        // store.dispatch(setOrderLastName(query.orderLastName))
+        // store.dispatch(setOrderEmail(query.orderEmail))
+        // store.dispatch(setOrderPhoneNumber(query.orderPhoneNumber))
+        // store.dispatch(setOrderHomeAddress(query.orderHomeAddress))
+        // store.dispatch(setOrderCity(query.orderCity))
+        // store.dispatch(setOrderPostalCode(query.orderPostalCode))
+        // store.dispatch(setOrderPayment(query.orderPayment))
 
 
         }
@@ -232,21 +232,20 @@ const Order = () => {
                     initialValues={{
                         displayOrderNav: '',
                         orderStep: '',
-                        orderStartDate: '',
-                        orderEndDate: '',
-                        orderStartTime: '',
-                        orderEndTime: '',
-                        vehicleId: '',
-                        orderAmount: '',
-                        orderFirstName: '',
-                        orderLastName: '',
-                        orderPhoneNumber: '',
-                        orderEmail: '',
-                        orderHomeAddress: '',
-                        orderCity: '',
-                        orderPostalCode: '',
-                        orderAdditionalInfo: '',
-                        orderPayment: ''
+                        orderStartDate: orderParams.orderStartTime,
+                        orderEndDate: orderParams.orderEndDate,
+                        orderStartTime: orderParams.orderStartTime,
+                        orderEndTime: orderParams.orderEndTime,
+                        vehicleId: orderParams.orderVehicleId,
+                        orderAmount: orderParams.orderAmount,
+                        orderFirstName: orderParams.orderFirstName,
+                        orderLastName: orderParams.orderLastName,
+                        orderPhoneNumber: orderParams.orderPhoneNumber,
+                        orderEmail: orderParams.orderEmail,
+                        orderHomeAddress: orderParams.orderHomeAddress,
+                        orderCity: orderParams.orderCity,
+                        orderPostalCode: orderParams.orderPostalCode,
+                        orderPayment: orderParams.orderPayment
                     }}
                     onSubmit={(values, {setSubmitting, resetForm}) => {
                         //sendOrder(values).then(r => history.push('/order?displayOrderNav=0&orderStep=4'))
@@ -388,7 +387,7 @@ const Order = () => {
                                     </Form.Label>
                                 </Form.Group>
                             </Form.Row>
-                            <Button type="submit" className="hvr-grow" disabled={isSubmitting}>Seuraava</Button>
+                            <Button type="submit" disabled={isSubmitting}>Seuraava</Button>
                         </Form>
                     )}
                 </Formik>
@@ -443,7 +442,7 @@ const Order = () => {
                         <p>{orderParams.orderPayment}</p>
                     </div>
                 </div>
-                <button className="hvr-pulse" onClick={sendOrder}>Lähetä tilaus</button>
+                <button onClick={sendOrder}>Lähetä tilaus</button>
             </div>}
             {/* ------------ Tilauksen kuittaus ------------ */}
             {orderParams.orderStep === '5' && <div id="orderConfirmationContainer">

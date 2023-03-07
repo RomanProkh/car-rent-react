@@ -5,8 +5,19 @@ import {Col, Row} from "react-bootstrap";
 import {Button} from "react-bootstrap";
 import {Formik} from "formik";
 import * as yup from 'yup';
+import store from "../store";
+import {
+    selectOrderParams,
+    setOrderEndDate,
+    setOrderEndTime,
+    setOrderStartDate,
+    setOrderStartTime, setOrderVehicleTypeId
+} from "../store/order";
+import {useSelector} from "react-redux";
 
 const SearchForm = () => {
+
+    const orderParams = useSelector(selectOrderParams)
 
     const [vehicleTypes, setVehicleTypes] = useState([]);
 
@@ -14,6 +25,8 @@ const SearchForm = () => {
 
 
     useEffect(()=> {
+
+console.log(orderParams.orderVehicleTypeId)
         axios
             .get("http://localhost:8081/api/vehicle_type")
             .then((res) => setVehicleTypes(res.data))
@@ -118,7 +131,11 @@ const SearchForm = () => {
                 validationSchema={schema}
 
                 initialValues={{
-
+                    type: orderParams.orderVehicleTypeId,
+                    orderStartDate: orderParams.orderStartDate,
+                    orderEndDate: orderParams.orderEndDate,
+                    orderStartTime: orderParams.orderStartTime,
+                    orderEndTime: orderParams.orderEndTime
                 }}
                 onSubmit={(values, { setSubmitting , resetForm}) => {
 

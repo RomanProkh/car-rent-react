@@ -13,13 +13,17 @@ import Order from "./components/Order";
 
 import{useDispatch, useSelector} from 'react-redux';
 import {selectDisplayOrderNav} from "./store/order";
-import {NavbarBrand} from "react-bootstrap";
+import {Button, NavbarBrand} from "react-bootstrap";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
+import user, {logout} from "./store/user";
+import store from "./store";
+import UserProfile from "./components/UserProfile";
 
 const App = () => {
 
     const displayNav = useSelector(selectDisplayOrderNav)
+    const { user } = useSelector(state => state.user)
 
     return (
         <div className="container">
@@ -36,10 +40,10 @@ const App = () => {
                             >Ota yhteyttä </NavLink>
                         </div>
                         <div>
-                            <NavLink to="/SignIn" className="hvr-buzz-out"
-                            >Sign In</NavLink>
-                            <NavLink to="/SignUp" className="hvr-buzz-out"
-                            >Sign Up</NavLink>
+                            {user && <NavLink to="/UserProfile" className="hvr-buzz-out">Profile</NavLink>}
+                            {user && <Button onClick={()=> store.dispatch(logout())}>Logout</Button>}
+                            {!user && <NavLink to="/SignIn" className="hvr-buzz-out">Sign In</NavLink>}
+                            {!user && <NavLink to="/SignUp" className="hvr-buzz-out">Sign Up</NavLink>}
                         </div>
                     </nav>
                     {displayNav && <OrderNav/>}
@@ -61,6 +65,9 @@ const App = () => {
                     <Route exact path="/SignUp">
                         <SignUp/>
                     </Route>
+                        <Route exact path="/UserProfile">
+                            <UserProfile/>
+                        </Route>
                     <Route exact path="/SignIn">
                         <SignIn/>
                     </Route>
