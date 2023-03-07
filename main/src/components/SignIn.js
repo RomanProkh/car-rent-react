@@ -9,7 +9,8 @@ import {Button, Card, Col, Row} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { Formik} from "formik";
 import * as yup from "yup";
-import {login, logout} from '../store/user'
+import {login, loginSuccess, logout} from '../store/user'
+import * as Yup from "yup";
 
 const SignIn = () => {
 
@@ -37,7 +38,16 @@ const SignIn = () => {
 
 
     // Form validation scheme
-    const schema = yup.object().shape({});
+    const schema = yup.object().shape({
+
+        password: Yup.string()
+            .max(45, "Nimen on oltava max. 40 merkkia pituinen")
+            .required("Pakollinen kenttä"),
+        email: Yup.string()
+            .email("Virheellinen sähköpostiosoite")
+            .required("Pakollinen kenttä"),
+
+    });
     if (user) {
         return (
             <div>
@@ -56,8 +66,7 @@ const SignIn = () => {
                     validationSchema={schema}
 
                     initialValues={{
-                        email: '',
-                        password: '',
+
                     }}
 
                     onSubmit={(values, { setSubmitting , resetForm}) => {
@@ -73,6 +82,7 @@ const SignIn = () => {
                         //             let tokenKey='myToken'
                         //             localStorage.setItem(tokenKey,
                         //                 JSON.stringify(response.data))
+                        //             //store.dispatch(loginSuccess);
                         //
                         //             if(response.data.accessToken !== null){
                         //                 console.log("User is logged in. " )
