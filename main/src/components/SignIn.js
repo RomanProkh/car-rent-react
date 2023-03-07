@@ -11,7 +11,7 @@ import { Formik} from "formik";
 import * as yup from "yup";
 import {login, logout} from '../store/user'
 
-const SignUp = () => {
+const SignIn = () => {
 
     // Application store
     const dispatch = useDispatch();
@@ -33,12 +33,20 @@ const SignUp = () => {
 
         store.dispatch(setDisplayElem(query.display))
 
-    }, [query.display]);
+    }, [query.display, user]);
 
 
     // Form validation scheme
     const schema = yup.object().shape({});
-
+    if (user) {
+        return (
+            <div>
+                Hi, {user.email}!
+                <button onClick={() => history.push('/')}>Pääsivulle</button>
+                <button onClick={() => dispatch(logout())}>Kirjaudu ulos</button>
+            </div>
+        )
+    }
     return (
         <div className="orderViewContainer">
             {displaySelector == null && <div className="">
@@ -144,4 +152,4 @@ const SignUp = () => {
         </div>
     )
 }
-export default SignUp
+export default SignIn
