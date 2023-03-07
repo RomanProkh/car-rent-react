@@ -232,20 +232,20 @@ const Order = () => {
                     initialValues={{
                         displayOrderNav: '',
                         orderStep: '',
-                        orderStartDate: orderParams.orderStartTime,
-                        orderEndDate: orderParams.orderEndDate,
-                        orderStartTime: orderParams.orderStartTime,
-                        orderEndTime: orderParams.orderEndTime,
-                        vehicleId: orderParams.orderVehicleId,
-                        orderAmount: orderParams.orderAmount,
-                        orderFirstName: orderParams.orderFirstName,
-                        orderLastName: orderParams.orderLastName,
-                        orderPhoneNumber: orderParams.orderPhoneNumber,
-                        orderEmail: orderParams.orderEmail,
-                        orderHomeAddress: orderParams.orderHomeAddress,
-                        orderCity: orderParams.orderCity,
-                        orderPostalCode: orderParams.orderPostalCode,
-                        orderPayment: orderParams.orderPayment
+                        orderStartDate: '',
+                        orderEndDate: '',
+                        orderStartTime: '',
+                        orderEndTime: '',
+                        vehicleId: '',
+                        orderAmount: '',
+                        orderFirstName: '',
+                        orderLastName: '',
+                        orderPhoneNumber: '',
+                        orderEmail: '',
+                        orderHomeAddress: '',
+                        orderCity: '',
+                        orderPostalCode: '',
+                        orderPayment: ''
                     }}
                     onSubmit={(values, {setSubmitting, resetForm}) => {
                         //sendOrder(values).then(r => history.push('/order?displayOrderNav=0&orderStep=4'))
