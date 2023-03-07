@@ -100,19 +100,21 @@ const CarResults = () => {
             <div className="carList">
                 <ul className="card">
                     {vehicles.map((option, index) => (
-                        <div className="homePageSingleCardContainer hvr-grow">
+                        <div className="homePageSingleCardContainer hvr-grow" onClick={() => makeOrder(option.Vehicle_id)}>
                             <h4>{option.Vehicle_model}</h4>
                             <img src={require("../assets/cars/" + option.Vehicle_src)} alt={option.Vehicle_model}/>
                             <div className="homePageCardDesc">
-                                <p>Kokonaishinta <b>{(option.Price * getOrderDuration()).toFixed(2)} €</b></p>
+                                <p>{option.Vehicle_descr}</p>
                                 <ul id="special">
                                     <li>
                                         Hinta/tunti <b>{option.Price} €</b>
                                     </li>
+                                    <li>
+                                        Kokonaishinta <b>{(option.Price * getOrderDuration()).toFixed(2)} €</b>
+                                    </li>
                                 </ul>
                             </div>
-                            <button onClick={() => makeOrder(option.Vehicle_id)}>Tilaa</button>
-
+                            <button>Tilaa</button>
                         </div>))}
                 </ul>
             </div>
