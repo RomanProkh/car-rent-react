@@ -13,7 +13,7 @@ const util = require('util');
 // For the user authentication
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const secrets = require ('./config/secrets.js')
+const secrets = require('./config/secrets.js')
 require('dotenv').config()
 
 // console.log(process.env)
@@ -54,13 +54,13 @@ let bodyParser = require('body-parser');
 
 // node native promisify
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Bearer  ");
     next();
 });
 
-let urlencodedParser = bodyParser.urlencoded({ extended: false });
+let urlencodedParser = bodyParser.urlencoded({extended: false});
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -74,12 +74,11 @@ app.get('/api/cars', cors(), async function (req, res) {
 
     let sql = "SELECT vehicle.Vehicle_id, vehicle_type.Type_name, Vehicle_model, Reg_number, Price, Vehicle_descr, Vehicle_src" +
         " FROM `vehicle`" +
-        " LEFT JOIN `order` ON vehicle.Vehicle_id=order.Vehicle_id" +
+        " LEFT JOIN `order` ON vehicle.Vehicle_id='order.Vehicle_id'" +
         " LEFT JOIN `vehicle_type` ON vehicle.Vehicle_type=vehicle_type.Type_id" +
         " WHERE (vehicle.vehicle_type='" + type + "' AND order.Order_end <= '" + startDate + "')" +
         " OR (vehicle.vehicle_type='" + type + "' AND order.Order_start >= '" + endDate + "')" +
         " OR (Order_id IS NULL AND vehicle.vehicle_type='" + type + "'); ";
-
     let result;
     let db = makeDb();
     try {
@@ -139,7 +138,7 @@ app.get('/api/vehicle_type', cors(), async function (req, res) {
 });
 
 // Tilauksen tekeminen
-app.post('/api/orders/', async (req, res) =>{
+app.post('/api/orders/', async (req, res) => {
 
     try {
         const data = req.body
@@ -149,7 +148,7 @@ app.post('/api/orders/', async (req, res) =>{
         try {
             await makeTransaction(db, async () => {
                 // INSERT NEW ORDER
-                db.query(sql, [data.First_name, data.Last_name, data.Email, data.Phone_Number, data.Home_address, data.City, data.Postal_code, data.Payment, data.Vehicle_id, data.Date_create, data.Order_start, data.Order_end, data.Amount]).then((result) =>  res.status(200).send("POST was succesful "));
+                db.query(sql, [data.First_name, data.Last_name, data.Email, data.Phone_Number, data.Home_address, data.City, data.Postal_code, data.Payment, data.Vehicle_id, data.Date_create, data.Order_start, data.Order_end, data.Amount]).then((result) => res.status(200).send("POST was succesful "));
             });
         } catch (err) {
             res.status(400).send("POST was not succesful ");
@@ -218,13 +217,13 @@ app.post('/api/signup/', async (req, res) => {
             let db = makeDb();
             try {
                 await makeTransaction(db, async () => {
-                    await db.query(sql, [user.userName, user.email, hashedPassword ,user.firstName, user.lastName, user.phoneNumber, user.homeAddress, user.city, user.postalCode ]);
+                    await db.query(sql, [user.userName, user.email, hashedPassword, user.firstName, user.lastName, user.phoneNumber, user.homeAddress, user.city, user.postalCode]);
 
                     // res.status(200).send("POST succesful ");
                     const accessToken = jwt.sign(JSON.stringify(user), process.env.SECRET_KEY)
                     //console.log(accessToken)
 
-                    res.status(202).json({ accessToken: accessToken })
+                    res.status(202).json({accessToken: accessToken})
                 });
             } catch (err) {
                 res.status(400).send("POST was not succesful ");
@@ -236,10 +235,10 @@ app.post('/api/signup/', async (req, res) => {
 });
 
 // User login
-app.post('/api/signin', urlencodedParser, async(req, res) => {
+app.post('/api/signin', urlencodedParser, async (req, res) => {
     let user = req.body
     //console.log(user)
-    try{
+    try {
         // Try to obtain a given account password from the database to compare
         let dbUserPassword = ''
         let sql = "SELECT username, email, password, COUNT(password) AS rows_found " +
@@ -250,40 +249,45 @@ app.post('/api/signin', urlencodedParser, async(req, res) => {
             await makeTransaction(db, async () => {
                 await db.query(sql, [user.email]).then((result) => {
                     // If user data found from the database
-                    dbUserPassword = result[0].rows_found === 1 ? result[0].password : null });
+                    dbUserPassword = result[0].rows_found === 1 ? result[0].password : null
+                });
                 //console.log(dbUserPassword)
             });
         } catch (err) {
             console.log(err);
         }
 
-        //Comparing the passswods
-        if(dbUserPassword !== null){
-            try{
+        //Comparing the passwords
+        if (dbUserPassword !== null) {
+            try {
                 const match = await bcrypt.compare(user.password, dbUserPassword);
                 const accessToken = jwt.sign(JSON.stringify(user), process.env.JWT_SECRET)
-                if(match){
+                if (match) {
                     console.log("Passwords matched")
                     res.json({
                         accessToken: accessToken,
-                        message: "User Identified"});
+                        message: "User Identified"
+                    });
                 } else {
                     res.json({
                         accessToken: null,
-                        message: "Invalid Credentials" });
+                        message: "Invalid Credentials"
+                    });
                 }
-            } catch(e) {
+            } catch (e) {
                 console.log(e)
             }
         } else {
             res.json({
                 accessToken: null,
-                message: "Invalid Credentials" });
+                message: "Invalid Credentials"
+            });
         }
-    }catch(e){
+    } catch (e) {
         res.json({
             accessToken: null,
-            message: "Error"})
+            message: "Error"
+        })
     }
 
 })
@@ -327,8 +331,6 @@ app.get('/api/usernames', cors(), async function (req, res) {
 
     res.send(rowsFound);
 })
-
-
 
 
 // ---------------------- YHTEYDET ----------------------------------------- //

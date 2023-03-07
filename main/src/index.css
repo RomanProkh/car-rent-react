@@ -40,7 +40,7 @@ nav {
   padding: 10px;
   align-items: center;
   justify-content: space-between;
-  border-bottom: solid 1px gray;
+  border-bottom: solid 1px #dee2e6;
 }
 
 nav a{
@@ -316,7 +316,7 @@ figcaption {
   display: block;
   flex-wrap: wrap;
   margin: 0 auto;
-  padding: 5% 0px;
+  padding: 4% 0px;
 }
 .orderFormTxt {
   width: 48%;
@@ -372,17 +372,18 @@ figcaption {
   font-size: 14px;
 }
 #orderFormContainer {
-  height: auto;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 5%;
-  padding: 5%;
 }
 
-#orderViewContainer {
+#orderFormContainer button{
+  margin-left: 37%;
+  background-color: red;
+  border-radius: 15px;
+  border-style: none;
+}
+
+.orderViewContainer {
   display: flex;
-  flex-wrap: wrap;
+  margin: 5% auto;
 }
 
 .vehicleImageContainer {
@@ -449,6 +450,7 @@ button:hover{
   flex-direction: column;
   width: 1140px;
   margin: 50px auto;
+  text-align: center;
 }
 
 .homePageModelContainer p{
@@ -470,6 +472,11 @@ button:hover{
   display: flex;
   flex-direction: column;
   padding-top: 60px;
+  width: fit-content;
+}
+
+.homePageSingleCardContainer#order{
+  padding:0;
 }
 
 .homePageSingleCardContainer h3{
@@ -494,12 +501,20 @@ button:hover{
   padding: 6px;
 }
 
+.homePageSingleCardContainer#order h3{
+  background-color: red;
+}
+
 #redBackground {
   background-color: red;
 }
 
 .homePageSingleCardContainer img{
   height: 227px;
+}
+
+.homePageSingleCardContainer#order img{
+  height: 300px;
 }
 
 .homePageSingleCardContainer button{
@@ -516,6 +531,7 @@ button:hover{
 
 .homePageCardDesc {
   padding: 30px 30px 0;
+  text-align: center;
 }
 
 .homePageCardDesc p{

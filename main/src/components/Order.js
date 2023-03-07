@@ -193,23 +193,40 @@ const Order = () => {
 
             {/* ------------ Vaihe 2. Ajoneuvon valinta ------------ */}
             {orderParams.orderStep === '3' && <div id="vehicleInfoContainer">
-                <span className="vehicleImageContainer">
+                {vehicle.map((option, index) => (
+                    <div className="homePageSingleCardContainer" id="order">
+                        <h3>{orderParams.orderVehicleModel}</h3>
+                        <img src={require("../assets/cars/" + option.Vehicle_src)} alt={option.Vehicle_model}/>
+                        <div className="homePageCardDesc">
+                            <p>Starting at <b>24,000$</b></p>
+                            <ul>
+                                <li>
+                                    {orderParams.orderVehicleType}
+                                </li>
+                                <li>
+                                    {(orderParams.orderVehiclePrice * getOrderDuration()).toFixed(2)} €
+                                </li>
+                            </ul>
+                        </div>
+                    </div>))}
+
+                {/*<span className="vehicleImageContainer">
                     {vehicle.map((option, index) => (
                         <figure key={option.Vehicle_id}>
                             <img src={require("../assets/cars/" + option.Vehicle_src)} alt={option.Vehicle_model}/>
-                            {/*<figcaption>{option.Vehicle_model}</figcaption>*/}
+                            <figcaption>{option.Vehicle_model}</figcaption>
                         </figure>))}
                 </span>
                 <span className="vehicleDataContainer">
                     <h2>{orderParams.orderVehicleModel}</h2>
                     <p>{orderParams.orderVehicleType}</p>
                     <p>{(orderParams.orderVehiclePrice * getOrderDuration()).toFixed(2)} €</p>
-                </span>
+                </span>*/}
             </div>}
 
             {/* ------------Vaihe 3. Tilaajan tiedot ------------ */}
             {orderParams.orderStep === '3' && <div id="orderFormContainer">
-                <h2>Tilaajan tiedot</h2>
+                {/*<h2>Tilaajan tiedot</h2>*/}
                 <Formik
                     validationSchema={schema}
 
@@ -372,7 +389,7 @@ const Order = () => {
                                     </Form.Label>
                                 </Form.Group>
                             </Form.Row>
-                            <Button type="submit" disabled={isSubmitting}>Seuraava</Button>
+                            <Button type="submit" className="hvr-grow" disabled={isSubmitting}>Seuraava</Button>
                         </Form>
                     )}
                 </Formik>
@@ -403,7 +420,7 @@ const Order = () => {
             {orderParams.orderStep === '5' && <div id="orderConfirmationContainer">
                 <h1>Order confirmation</h1>
 
-                <button onClick={() => history.push('/')}>Pääsivulle</button>
+                <button onClick={() => history.push('/Home')}>Pääsivulle</button>
 
             </div>}
             {/* ------------ Order confirmation email form ------------ */}
