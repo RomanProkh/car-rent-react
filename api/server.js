@@ -124,7 +124,7 @@ app.get('/api/vehicle_type/:id', cors(), async function (req, res, url) {
 });
 
 // Ajoneuvon tyypit
-app.get('/api/vehicle_type', cors(), async function (req, res) {
+app.get('/api/vehicle_type', async function (req, res) {
     let sql = "SELECT vehicle_type.Type_id, Type_name FROM vehicle_type WHERE 1=1 ORDER BY Type_id";
     let db = makeDb();
     let result;
