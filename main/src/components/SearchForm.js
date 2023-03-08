@@ -58,7 +58,6 @@ const SearchForm = () => {
     // Form validation scheme
 
     const yup = require("yup");
-    const formik = useFormik;
     const schema = yup.object().shape({
 
         orderStartDate: Yup.date().required("Lisää noutopäivä" + " ,").min(today),
