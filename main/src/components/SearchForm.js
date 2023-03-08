@@ -147,6 +147,7 @@ const SearchForm = () => {
                     orderEndTime: orderParams.orderEndTime
                 }}
                 onSubmit={(values, {setSubmitting, resetForm}) => {
+
                     document.forms["vehicleSearch"].submit()
                     setSubmitting(false);
                 }}
@@ -241,6 +242,7 @@ const SearchForm = () => {
                                 <Form.Control
                                     name="orderEndDate"
                                     type="date"
+                                    min={currentDate}
                                     value={values.orderEndDate}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
