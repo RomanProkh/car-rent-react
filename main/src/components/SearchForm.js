@@ -14,6 +14,7 @@ import {
     setOrderStartTime, setOrderVehicleTypeId
 } from "../store/order";
 import {useSelector} from "react-redux";
+import {DATE} from "mysql/lib/protocol/constants/types";
 
 const SearchForm = () => {
 
@@ -24,9 +25,7 @@ const SearchForm = () => {
     // Fetching existing vehicle type names data
 
 
-    useEffect(()=> {
-
-console.log(orderParams.orderVehicleTypeId)
+    useEffect(() => {
         axios
             .get("http://localhost:8081/api/vehicle_type")
             .then((res) => setVehicleTypes(res.data))
@@ -121,6 +120,18 @@ console.log(orderParams.orderVehicleTypeId)
         // terms: yup.bool().required().oneOf([true], 'Terms must be accepted'),
     });
 
+    const currentDate = `${new Date().getFullYear()}-0${new Date().getMonth() + 1}-0${new Date().getDate()}`;
+
+    const isTimeBigger = (timeToCompare) => {
+        const currentTime = new Date().getHours();
+        const newTime = timeToCompare.split(":")[0];
+        console.log('currentTime: ' + currentTime + ' orderTime: ' + newTime)
+        if (currentTime >= newTime) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
     return (
@@ -128,8 +139,6 @@ console.log(orderParams.orderVehicleTypeId)
         <div id="searchFormContainer">
             <h2>Syötä päivämääräväli</h2>
             <Formik
-                validationSchema={schema}
-
                 initialValues={{
                     type: orderParams.orderVehicleTypeId,
                     orderStartDate: orderParams.orderStartDate,
@@ -137,11 +146,8 @@ console.log(orderParams.orderVehicleTypeId)
                     orderStartTime: orderParams.orderStartTime,
                     orderEndTime: orderParams.orderEndTime
                 }}
-                onSubmit={(values, { setSubmitting , resetForm}) => {
-
-                    //console.log(values)
+                onSubmit={(values, {setSubmitting, resetForm}) => {
                     document.forms["vehicleSearch"].submit()
-
                     setSubmitting(false);
                 }}
             >
@@ -156,7 +162,7 @@ console.log(orderParams.orderVehicleTypeId)
                       isSubmitting,
                       resetForm
                   }) => (
-                    <Form className="searchForm" name="vehicleSearch" action="/car-results" noValidate onSubmit={handleSubmit}>
+                    <Form className="searchForm" name="vehicleSearch" action="/car-results" onSubmit={handleSubmit}>
                         <Form.Control name="displayOrderNav" type="hidden" value="true"/>
                         <Form.Control name="orderStep" type="hidden" value="2"/>
 
@@ -164,9 +170,9 @@ console.log(orderParams.orderVehicleTypeId)
                             <Form.Label>Ajoneuvon tyyppi:</Form.Label>
                             <Form.Control as="select"
                                           name="type"
-                                          onChange = {handleChange}
-                                          onBlur = {handleBlur}
-                                          isValid = {!errors.vehicleType}
+                                          onChange={handleChange}
+                                          onBlur={handleBlur}
+                                          isValid={!errors.vehicleType}
                                           isInvalid={!!errors.vehicleType}>
                                 {vehicleTypes.map((option, index) => (
                                     <option key={option.Type_id} value={option.Type_id}>{option.Type_name}</option>
@@ -176,110 +182,116 @@ console.log(orderParams.orderVehicleTypeId)
                         </Form.Group>
 
                         <Row className="mb-3 mt-3">
-
-                        <Form.Group as={Col} md="6" controlId="formBasicOrderStartDate">
-                            <Form.Label>Ajoneuvon noutopäivä:</Form.Label>
-                            <Form.Control
-                                name="orderStartDate"
-                                type="date"
-                                value = {values.orderStartDate}
-                                onChange = {handleChange}
-                                onBlur = {handleBlur}
-                                isValid = {touched.orderStartDate && !errors.orderStartDate}
-                                isInvalid={!!errors.orderStartDate}
-                            />
-                        </Form.Group>
-                        <Form.Group as={Col} md="6" controlId="formBasicOrderStartTime">
-                            <Form.Label>Ajoneuvon noutoaika</Form.Label>
-                            <Form.Control  as="select"
-                                name="orderStartTime"
-                                value = {values.orderStartTime}
-                                onChange = {handleChange}
-                                onBlur = {handleBlur}
-                                isValid = {touched.orderStartTime && !errors.orderStartTime}
-                                isInvalid={!!errors.orderStartTime}>
-                                <option disabled value="">Valitse aika</option>
-                                <option>00:00</option>
-                                <option>01:00</option>
-                                <option>02:00</option>
-                                <option>03:00</option>
-                                <option>04:00</option>
-                                <option>05:00</option>
-                                <option>06:00</option>
-                                <option>07:00</option>
-                                <option>08:00</option>
-                                <option>09:00</option>
-                                <option>10:00</option>
-                                <option>11:00</option>
-                                <option>12:00</option>
-                                <option>13:00</option>
-                                <option>14:00</option>
-                                <option>15:00</option>
-                                <option>16:00</option>
-                                <option>17:00</option>
-                                <option>18:00</option>
-                                <option>19:00</option>
-                                <option>20:00</option>
-                                <option>21:00</option>
-                                <option>22:00</option>
-                                <option>23:00</option>
-                            </Form.Control>
-                            <Form.Control.Feedback type="invalid">{errors.orderStartDate}{errors.orderStartTime}</Form.Control.Feedback>
-                        </Form.Group>
+                            <Form.Group as={Col} md="6" controlId="formBasicOrderStartDate">
+                                <Form.Label>Ajoneuvon noutopäivä:</Form.Label>
+                                <Form.Control
+                                    name="orderStartDate"
+                                    type="date"
+                                    min={currentDate}
+                                    value={values.orderStartDate}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    isValid={touched.orderStartDate && !errors.orderStartDate}
+                                    isInvalid={!!errors.orderStartDate}
+                                />
+                            </Form.Group>
+                            <Form.Group as={Col} md="6" controlId="formBasicOrderStartTime">
+                                <Form.Label>Ajoneuvon noutoaika</Form.Label>
+                                <Form.Control as="select"
+                                              name="orderStartTime"
+                                              value={values.orderStartTime}
+                                              onChange={handleChange}
+                                              onBlur={handleBlur}
+                                              isValid={touched.orderStartTime && !errors.orderStartTime}
+                                              isInvalid={!!errors.orderStartTime||values.orderStartDate === currentDate
+                                              && isTimeBigger(values.orderStartTime)}>
+                                    <option disabled value="">Valitse aika</option>
+                                    <option>00:00</option>
+                                    <option>1:00</option>
+                                    <option>2:00</option>
+                                    <option>3:00</option>
+                                    <option>4:00</option>
+                                    <option>5:00</option>
+                                    <option>6:00</option>
+                                    <option>7:00</option>
+                                    <option>8:00</option>
+                                    <option>9:00</option>
+                                    <option>10:00</option>
+                                    <option>11:00</option>
+                                    <option>12:00</option>
+                                    <option>13:00</option>
+                                    <option>14:00</option>
+                                    <option>15:00</option>
+                                    <option>16:00</option>
+                                    <option>17:00</option>
+                                    <option>18:00</option>
+                                    <option>19:00</option>
+                                    <option>20:00</option>
+                                    <option>21:00</option>
+                                    <option>22:00</option>
+                                    <option>23:00</option>
+                                </Form.Control>
+                                <Form.Control.Feedback
+                                    type="invalid">{errors.orderStartDate}{errors.orderStartTime}</Form.Control.Feedback>
+                            </Form.Group>
                         </Row>
                         <Row className="mb-3 mt-3">
-                        <Form.Group as={Col} md="6"  controlId="formBasicOrderEndDate">
-                            <Form.Label>Ajoneuvon palautuspäivä:</Form.Label>
-                            <Form.Control
-                                name="orderEndDate"
-                                type="date"
-                                value = {values.orderEndDate}
-                                onChange = {handleChange}
-                                onBlur = {handleBlur}
-                                isValid = {touched.orderEndDate && !errors.orderEndDate}
-                                isInvalid={!!errors.orderEndDate}
-                            />
-                        </Form.Group>
-                        <Form.Group as={Col} md="6" controlId="formBasicOrderEndTime">
-                            <Form.Label>Ajoneuvon palautusaika</Form.Label>
-                            <Form.Control  as="select"
-                                           name="orderEndTime"
-                                           value = {values.orderEndTime}
-                                           onChange = {handleChange}
-                                           onBlur = {handleBlur}
-                                           isValid = {touched.orderEndTime && !errors.orderEndTime}
-                                           isInvalid={!!errors.orderEndTime}>
-                                <option disabled value="">Valitse aika</option>
-                                <option>00:00</option>
-                                <option>01:00</option>
-                                <option>02:00</option>
-                                <option>03:00</option>
-                                <option>04:00</option>
-                                <option>05:00</option>
-                                <option>06:00</option>
-                                <option>07:00</option>
-                                <option>08:00</option>
-                                <option>09:00</option>
-                                <option>10:00</option>
-                                <option>11:00</option>
-                                <option>12:00</option>
-                                <option>13:00</option>
-                                <option>14:00</option>
-                                <option>15:00</option>
-                                <option>16:00</option>
-                                <option>17:00</option>
-                                <option>18:00</option>
-                                <option>19:00</option>
-                                <option>20:00</option>
-                                <option>21:00</option>
-                                <option>22:00</option>
-                                <option>23:00</option>
-                            </Form.Control>
-                            <Form.Control.Feedback type="invalid">{errors.orderEndDate}{errors.orderEndTime}</Form.Control.Feedback>
-                        </Form.Group>
-                            </Row>
-                        <Button variant="primary" className="hvr-grow" type="submit"  disabled={isSubmitting}>Tee tilaus</Button>
-
+                            <Form.Group as={Col} md="6" controlId="formBasicOrderEndDate">
+                                <Form.Label>Ajoneuvon palautuspäivä:</Form.Label>
+                                <Form.Control
+                                    name="orderEndDate"
+                                    type="date"
+                                    value={values.orderEndDate}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    isValid={touched.orderEndDate && !errors.orderEndDate}
+                                    isInvalid={!!errors.orderEndDate||values.orderStartDate > values.orderEndDate && touched.orderEndDate}
+                                />
+                            </Form.Group>
+                            <Form.Group as={Col} md="6" controlId="formBasicOrderEndTime">
+                                <Form.Label>Ajoneuvon palautusaika</Form.Label>
+                                <Form.Control as="select"
+                                              name="orderEndTime"
+                                              value={values.orderEndTime}
+                                              onChange={handleChange}
+                                              onBlur={handleBlur}
+                                              isValid={touched.orderEndTime && !errors.orderEndTime}
+                                              isInvalid={!!errors.orderEndTime||values.orderStartTime >=
+                                              values.orderEndTime && touched.orderEndTime && values.orderStartDate === values.orderEndDate
+                                              || values.orderStartDate > values.orderEndDate && touched.orderEndDate}>
+                                    <option disabled value="">Valitse aika</option>
+                                    <option>00:00</option>
+                                    <option>1:00</option>
+                                    <option>2:00</option>
+                                    <option>3:00</option>
+                                    <option>4:00</option>
+                                    <option>5:00</option>
+                                    <option>6:00</option>
+                                    <option>7:00</option>
+                                    <option>8:00</option>
+                                    <option>9:00</option>
+                                    <option>10:00</option>
+                                    <option>11:00</option>
+                                    <option>12:00</option>
+                                    <option>13:00</option>
+                                    <option>14:00</option>
+                                    <option>15:00</option>
+                                    <option>16:00</option>
+                                    <option>17:00</option>
+                                    <option>18:00</option>
+                                    <option>19:00</option>
+                                    <option>20:00</option>
+                                    <option>21:00</option>
+                                    <option>22:00</option>
+                                    <option>23:00</option>
+                                </Form.Control>
+                                <Form.Control.Feedback
+                                    type="invalid">{errors.orderEndDate}{errors.orderEndTime}</Form.Control.Feedback>
+                            </Form.Group>
+                        </Row>
+                        <Button variant="primary" className="hvr-grow" type="submit"
+                                disabled={isSubmitting ||!isValid}>Tee
+                            tilaus</Button>
                     </Form>
                 )}
             </Formik>
