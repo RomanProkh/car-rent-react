@@ -176,12 +176,11 @@ const SearchForm = () => {
                         <Form.Group as={Col} md="6" controlId="formBasicOrderStartDate">
                             <Form.Label>Ajoneuvon noutopäivä:</Form.Label>
                             <Form.Control
-                                id="orderStartDate"
                                 name="orderStartDate"
                                 type="date"
                                 value = {values.orderStartDate}
-                                onChange = {formik.handleChange}
-                                onBlur = {formik.handleBlur}
+                                onChange = {handleChange}
+                                onBlur = {handleBlur}
                                 isValid = {touched.orderStartDate && !errors.orderStartDate}
                                 isInvalid={!!errors.orderStartDate}
                             />
@@ -228,12 +227,11 @@ const SearchForm = () => {
                         <Form.Group as={Col} md="6"  controlId="formBasicOrderEndDate">
                             <Form.Label>Ajoneuvon palautuspäivä:</Form.Label>
                             <Form.Control
-                                id="orderEndDate"
                                 name="orderEndDate"
                                 type="date"
                                 value = {values.orderEndDate}
-                                onChange = {formik.handleChange}
-                                onBlur = {formik.handleBlur}
+                                onChange = {handleChange}
+                                onBlur = {handleBlur}
                                 isValid = {touched.orderEndDate && !errors.orderEndDate}
                                 isInvalid={!!errors.orderEndDate}
                             />
