@@ -160,7 +160,7 @@ const Order = () => {
     // Form validation
 
     const yup = require("yup");
-      const formik = useFormik;
+    const formik = useFormik;
         const schema = yup.object().shape({
 
             orderFirstName: Yup.string().required("Lisää etunimi"),
@@ -251,12 +251,11 @@ return (
             <Form.Group as={Col} md="5" controlId="formBasicOrderFirsName">
                 <Form.Label>Etunimi:</Form.Label>
             <Form.Control
-                id="orderFirstName"
                 name="orderFirstName"
                 type="text"
-                value={formik.values.orderFirstName}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+                value={values.orderFirstName}
+                onChange={handleChange}
+                onBlur={handleBlur}
               /*  {formik.touched.orderFirstName && formik.errors.orderFirstName ? <p>{formik.errors.orderFirstName}</p> : null} */
                 isValid={touched.orderFirstName && !errors.orderFirstName}
                 isInvalid={!!errors.orderFirstName}
@@ -265,12 +264,11 @@ return (
                 <Form.Group as={Col} md="5" controlId="formBasicOrderLastName">
                 <Form.Label>Sukunimi:</Form.Label>
             <Form.Control
-                id="orderLastName"
                 name="orderLastName"
                 type="text"
-                value={formik.values.orderLastName}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+                value={values.orderLastName}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 /*  {formik.touched.orderLastName && formik.errors.orderLastName ? <p>{formik.errors.orderLastName}</p> : null} */
                   isValid={touched.orderLastName && !errors.orderLastName}
                   isInvalid={!!errors.orderLastName}
@@ -284,12 +282,11 @@ return (
               <Form.Group as={Col} md="5" controlId="formBasicOrderPhoneNumber">
                   <Form.Label>Puhelinnumero:</Form.Label>
               <Form.Control
-                  id="orderPhoneNumber"
                   name="orderPhoneNumber"
                   type="text"
-                  value={formik.values.orderPhoneNumber}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  value={values.orderPhoneNumber}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 /*  {formik.touched.orderPhoneNumber && formik.errors.orderPhoneNumber ? <p>{formik.errors.name}</p> : null} */
                   isValid={touched.orderPhoneNumber && !errors.orderPhoneNumber}
                   isInvalid={!!errors.orderPhoneNumber}
@@ -298,12 +295,11 @@ return (
                   <Form.Group as={Col} md="5" controlId="formBasicOrderEmail">
                   <Form.Label>Sähköpostiosoite:</Form.Label>
               <Form.Control
-                  id="orderEmail"
                   name="orderEmail"
                   type="text"
-                  value={formik.values.orderEmail}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  value={values.orderEmail}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 /*  {formik.touched.orderEmail && formik.errors.orderEmail ? <p>{formik.errors.orderEmail}</p> : null} */
                   isValid={touched.orderEmail && !errors.orderEmail}
                   isInvalid={!!errors.orderEmail}
@@ -314,12 +310,11 @@ return (
               <Form.Group as={Col} md="5" controlId="formBasicOrderHomeAddress">
                   <Form.Label>Katuosoite:</Form.Label>
               <Form.Control
-                  id="orderHomeAddress"
                   name="orderHomeAddress"
                   type="text"
-                  value={formik.values.orderHomeAddress}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  value={values.orderHomeAddress}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 /*  {formik.touched.orderHomeAddress && formik.errors.orderHomeAddress ? <p>{formik.errors.orderHomeAddress}</p> : null} */
                   isValid={touched.orderHomeAddress && !errors.orderHomeAddress}
                   isInvalid={!!errors.orderHomeAddress}
@@ -328,12 +323,11 @@ return (
                   <Form.Group as={Col} md="3" controlId="formBasicOrderCity">
                   <Form.Label>Kaupunki:</Form.Label>
               <Form.Control
-                  id="orderCity"
                   name="orderCity"
                   type="text"
-                  value={formik.values.orderCity}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  value={values.orderCity}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 /*  {formik.touched.orderHomeAddress && formik.errors.orderHomeAddress ? <p>{formik.errors.orderHomeAddress}</p> : null} */
                   isValid={touched.orderCity && !errors.orderCity}
                   isInvalid={!!errors.orderCity}
@@ -342,12 +336,11 @@ return (
                   <Form.Group as={Col} md="2" controlId="formBasicOrderPostalCode">
                   <Form.Label>Postinumero:</Form.Label>
               <Form.Control
-                  id="orderPostalCode"
                   name="orderPostalCode"
                   type="text"
-                  value={formik.values.orderPostalCode}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  value={values.orderPostalCode}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 /*  {formik.touched.orderHomeAddress && formik.errors.orderHomeAddress ? <p>{formik.errors.orderHomeAddress}</p> : null} */
                   isValid={touched.orderPostalCode && !errors.orderPostalCode}
                   isInvalid={!!errors.orderPostalCode}
