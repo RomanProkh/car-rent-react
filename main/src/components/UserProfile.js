@@ -40,8 +40,6 @@ const UserProfile = () => {
 
     // Fetching vehicles listing data
     useEffect( () => {
-        console.log(user)
-
         if(user){
         const accessToken = JSON.parse(localStorage.getItem('user')).accessToken
         const userEmail = JSON.parse(localStorage.getItem('user')).email
@@ -66,7 +64,6 @@ const UserProfile = () => {
         )
     }
     return(
-
         <div>
             <h2>Käyttäjän profiili</h2>
                 <div>

@@ -38,6 +38,7 @@ const Order = () => {
 
     const [vehicle, setVehicle] = useState([]);
     const [order, setOrder] = useState({});
+    const [userData, setUserData] = useState({});
 
     // Fetching vehicles listing data
     useEffect(() => {
@@ -89,7 +90,7 @@ const Order = () => {
         // store.dispatch(setOrderPostalCode(query.orderPostalCode))
         // store.dispatch(setOrderPayment(query.orderPayment))
 
-
+        setUserData(getUserData)
         }
 
     }, [query.orderStart, query.orderEnd, query.type, query.orderStartDate, query.orderEndDate, query.orderStartTime, query.orderEndTime, query.vehicleId, query.orderStep]);
@@ -187,6 +188,15 @@ const Order = () => {
     // Form validation scheme
     const schema = yup.object().shape({})
 
+    //Getting user data (of course not the best way to do it, but we will fix it later on)
+    const getUserData = () =>{
+        if(localStorage.getItem('user')===null){
+            return '';
+        }else{
+            return JSON.parse(localStorage.getItem('user'))
+        }
+    }
+
     return (
         <div className="orderViewContainer">
 
@@ -228,7 +238,6 @@ const Order = () => {
                 {/*<h2>Tilaajan tiedot</h2>*/}
                 <Formik
                     validationSchema={schema}
-
                     initialValues={{
                         displayOrderNav: '',
                         orderStep: '',
@@ -238,13 +247,13 @@ const Order = () => {
                         orderEndTime: '',
                         vehicleId: '',
                         orderAmount: '',
-                        orderFirstName: '',
-                        orderLastName: '',
-                        orderPhoneNumber: '',
-                        orderEmail: '',
-                        orderHomeAddress: '',
-                        orderCity: '',
-                        orderPostalCode: '',
+                        orderFirstName: userData.firstName,
+                        orderLastName: userData.lastName,
+                        orderPhoneNumber: userData.phoneNumber,
+                        orderEmail: userData.email,
+                        orderHomeAddress: userData.homeAddress,
+                        orderCity: userData.city,
+                        orderPostalCode: userData.postalCode,
                         orderPayment: ''
                     }}
                     onSubmit={(values, {setSubmitting, resetForm}) => {
