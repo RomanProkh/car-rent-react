@@ -51,7 +51,10 @@ const SearchForm = () => {
     // }
 
     // Form validation scheme
+    const yup = require("yup");
     const schema = yup.object().shape({
+        orderStartDate: Yup.date().required("Lisää noutopäivä").min(today),
+        orderEndDate: Yup.date().required("Lisää Palautuspäivä").min(today),
 
         // username: yup.string()
         //     .min(5, 'Must be at least 5 characters')
@@ -163,11 +166,12 @@ const SearchForm = () => {
                         <Form.Group as={Col} md="6" controlId="formBasicOrderStartDate">
                             <Form.Label>Ajoneuvon noutopäivä:</Form.Label>
                             <Form.Control
+                                id="orderStartDate"
                                 name="orderStartDate"
                                 type="date"
-                                value = {values.orderStartDate}
-                                onChange = {handleChange}
-                                onBlur = {handleBlur}
+                                value = {formik.values.orderStartDate}
+                                onChange = {formik.handleChange}
+                                onBlur = {formik.handleBlur}
                                 isValid = {touched.orderStartDate && !errors.orderStartDate}
                                 isInvalid={!!errors.orderStartDate}
                             />
@@ -214,11 +218,12 @@ const SearchForm = () => {
                         <Form.Group as={Col} md="6"  controlId="formBasicOrderEndDate">
                             <Form.Label>Ajoneuvon palautuspäivä:</Form.Label>
                             <Form.Control
+                                id="orderEndDate"
                                 name="orderEndDate"
                                 type="date"
-                                value = {values.orderEndDate}
-                                onChange = {handleChange}
-                                onBlur = {handleBlur}
+                                value = {formik.values.orderEndDate}
+                                onChange = {formik.handleChange}
+                                onBlur = {formik.handleBlur}
                                 isValid = {touched.orderEndDate && !errors.orderEndDate}
                                 isInvalid={!!errors.orderEndDate}
                             />
