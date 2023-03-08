@@ -22,7 +22,7 @@ import axios from "axios";
 import {Button, Card, Col, Row} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import {useFormik, Field, Formik} from "formik";
-import * as yup from "yup";
+import * as Yup from "yup";
 
 const Order = () => {
 
@@ -161,16 +161,14 @@ const Order = () => {
 
     const yup = require("yup");
         const schema = yup.object().shape({
-            orderStartDate: yup.date().required("Lisää noutopäivä").min(today),
-            orderEndDate: yup.date().required("Lisää Palautuspäivä").min(today),
 
-            orderFirstName: yup.string().required("Lisää etunimi"),
-            orderLastName: yup.string().required("Lisää sukunimi"),
-            orderPhoneNumber: yup.number().required("Lisää puhelinnumero"),
-            orderEmail: yup.string().required("Lisää sähköpostiosoite"),
-            orderHomeAddress: yup.string().required("Lisää katuosoite"),
-            orderCity: yup.string().required("Lisää kaupunki"),
-            orderPostalCode: yup.number().required("Lisää postinumero"),
+            orderFirstName: Yup.string().required("Lisää etunimi"),
+            orderLastName: Yup.string().required("Lisää sukunimi"),
+            orderPhoneNumber: Yup.number().required("Lisää puhelinnumero"),
+            orderEmail: Yup.string().required("Lisää sähköpostiosoite"),
+            orderHomeAddress: Yup.string().required("Lisää katuosoite"),
+            orderCity: Yup.string().required("Lisää kaupunki"),
+            orderPostalCode: Yup.number().required("Lisää postinumero"),
 });
 
 return (
