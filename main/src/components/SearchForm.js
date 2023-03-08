@@ -176,8 +176,8 @@ const SearchForm = () => {
                                 name="orderStartDate"
                                 type="date"
                                 value = {values.orderStartDate}
-                                onChange = {handleChange}
-                                onBlur = {handleBlur}
+                                onChange = {formik.handleChange}
+                                onBlur = {formik.handleBlur}
                                 isValid = {touched.orderStartDate && !errors.orderStartDate}
                                 isInvalid={!!errors.orderStartDate}
                             />
@@ -228,8 +228,8 @@ const SearchForm = () => {
                                 name="orderEndDate"
                                 type="date"
                                 value = {values.orderEndDate}
-                                onChange = {handleChange}
-                                onBlur = {handleBlur}
+                                onChange = {formik.handleChange}
+                                onBlur = {formik.handleBlur}
                                 isValid = {touched.orderEndDate && !errors.orderEndDate}
                                 isInvalid={!!errors.orderEndDate}
                             />
