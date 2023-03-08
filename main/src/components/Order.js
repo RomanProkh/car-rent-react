@@ -160,6 +160,7 @@ const Order = () => {
     // Form validation
 
     const yup = require("yup");
+      const formik = useFormik;
         const schema = yup.object().shape({
 
             orderFirstName: Yup.string().required("Lisää etunimi"),
