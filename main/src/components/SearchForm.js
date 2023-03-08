@@ -61,8 +61,8 @@ const SearchForm = () => {
     const formik = useFormik;
     const schema = yup.object().shape({
 
-        orderStartDate: Yup.date().required("Lisää noutopäivä").min(today),
-        orderEndDate: Yup.date().required("Lisää Palautuspäivä").min(today),
+        orderStartDate: Yup.date().required("Lisää noutopäivä" + " ,").min(today),
+        orderEndDate: Yup.date().required("Lisää Palautuspäivä" + " ,").min(today),
         orderStartTime: Yup.string().required("Lisää Aloitusaika"),
         orderEndTime: Yup.string().required("Lisää Lopetusaika"),
 
