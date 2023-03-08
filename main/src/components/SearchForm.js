@@ -8,6 +8,8 @@ import * as Yup from 'yup';
 
 let date = new Date();
 let today = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
+/*let tomorrow = today.getDate() + 1;*/
+
 
 const SearchForm = () => {
 
