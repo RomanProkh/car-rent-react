@@ -169,6 +169,7 @@ const Order = () => {
             orderHomeAddress: Yup.string().required("Lisää katuosoite"),
             orderCity: Yup.string().required("Lisää kaupunki"),
             orderPostalCode: Yup.number().required("Lisää postinumero"),
+            orderPayment: Yup.string().required("Lisää maksutapa"),
 });
 
 return (
