@@ -41,6 +41,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   border-bottom: solid 1px #dee2e6;
+  font-size: larger;
 }
 
 nav a{
@@ -201,6 +202,47 @@ footer h2 {
   margin: 0 auto;
   max-width: 1000px;
   display: grid;
+}
+
+.signIn{
+  width: 50%;
+  margin: auto;
+  display: grid;
+  justify-content: center;
+}
+
+.signUp{
+  margin: auto;;
+  text-align: center;
+  display: flex;
+  width: 46%;
+  justify-content: center;
+}
+
+#flexButtons{
+  display: flex;
+  justify-content: center;
+}
+
+#centerAlignedTextContainer{
+  text-align: center;
+}
+
+.signInGreetings{
+  display: grid;
+  width: fit-content;
+  justify-content: center;
+  margin: auto;
+}
+
+#flexButtons button{
+  background-color: red;
+  border-radius: 15px;
+  border:none;
+}
+
+#flexButtons button:hover{
+  background-color: #ff4040;
 }
 
 .form-group {
@@ -364,6 +406,7 @@ figcaption {
   flex-wrap: wrap;
   margin: 0 auto;
   padding: 1% 0px;
+  width: 380px;
 }
 .orderFormTxt {
   width: 48%;

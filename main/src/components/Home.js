@@ -39,7 +39,7 @@ const Home = () => {
                                     B-luokan ajoneuvo
                                 </li>
                             </ul>
-                            <button>Learn More</button>
+                            <button>Lue lisää</button>
                         </div>
                     </div>
                     <div className="homePageSingleCardContainer hvr-grow">
@@ -59,7 +59,7 @@ const Home = () => {
                                     B-luokan ajoneuvo
                                 </li>
                             </ul>
-                            <button>Learn More</button>
+                            <button>Lue lisää</button>
                         </div>
                     </div>
                     <div className="homePageSingleCardContainer hvr-grow">
@@ -79,7 +79,7 @@ const Home = () => {
                                     M-luokan ajoneuvo
                                 </li>
                             </ul>
-                            <button>Learn More</button>
+                            <button>Lue lisää</button>
                         </div>
                     </div>
                 </div>

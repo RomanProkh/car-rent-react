@@ -35,7 +35,7 @@ const ContactUs = () => {
     return (
         <div className="contactUsMainDiv">
             <h2>Onko kysyttävää?</h2>
-            <h3>Laita viestisi ja vastaamme siihen mahdollisimman pian</h3>
+            <h3>Lähetä meille viestin ja me vastaamme mahdollisimman pian</h3>
             <form onSubmit={formik.handleSubmit} className="contactUs">
                 <div id="flexRows">
                     <div id="gridContainer">

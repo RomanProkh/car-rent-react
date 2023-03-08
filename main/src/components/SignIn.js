@@ -50,17 +50,16 @@ const SignIn = () => {
     });
     if (user) {
         return (
-            <div>
-                Hi, {user.email}!
+            <div className="signInGreetings">
+                Hei, {user.email}!
                 <button onClick={() => history.push('/')}>Pääsivulle</button>
                 <button onClick={() => dispatch(logout())}>Kirjaudu ulos</button>
             </div>
         )
     }
     return (
-        <div className="orderViewContainer">
-            {displaySelector == null && <div className="">
-
+        <div>
+            {displaySelector == null && <div className="signIn">
                 <h2>Käyttäjän sisäänkirjauttuminen</h2>
                 <Formik
                     validationSchema={schema}
@@ -121,7 +120,7 @@ const SignIn = () => {
                                 <Form.Label>Tilin tiedot:</Form.Label>
                             </Form.Row>
 
-                            <Form.Group as={Col} md="5" controlId="formBasicEmail">
+                            <Form.Group as={Col} md="12" controlId="formBasicEmail">
                                 <Form.Label>Sähköpostiosoite:</Form.Label>
                                 <Form.Control
                                     name="email"
@@ -133,7 +132,7 @@ const SignIn = () => {
                                     isInvalid={!!errors.email}
                                 />
                             </Form.Group>
-                            <Form.Group as={Col} md="5" controlId="formBasicPassword">
+                            <Form.Group as={Col} md="12" controlId="formBasicPassword">
                                 <Form.Label>Salasana:</Form.Label>
                                 <Form.Control
                                     name="password"
@@ -145,8 +144,10 @@ const SignIn = () => {
                                     isInvalid={!!errors.password}
                                 />
                             </Form.Group>
-
-                            <Button type="reset" onClick={resetForm}>Tyhjennä</Button><Button type="submit" disabled={isSubmitting}>Kirjaudu</Button>
+                            <div id="flexButtons">
+                            <Button type="reset" onClick={resetForm}>Tyhjennä</Button>
+                            <Button type="submit" disabled={isSubmitting}>Kirjaudu</Button>
+                            </div>
                         </Form>
                     )}
                 </Formik>

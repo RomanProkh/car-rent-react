@@ -7,7 +7,7 @@ import store from "../store";
 import axios from "axios";
 import {Button, Card, Col, Row} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { Formik} from "formik";
+import {Formik} from "formik";
 import * as yup from "yup";
 
 const SignUp = () => {
@@ -44,7 +44,7 @@ const SignUp = () => {
                         axios.get("http://localhost:8081/api/usernames/?username=" + value)
                             .then((res) => {
                                 //console.log(res)
-                                if(res.data.username) resolve(false)
+                                if (res.data.username) resolve(false)
                                 else resolve(true)
                             })
                             .catch((error) => {
@@ -65,7 +65,7 @@ const SignUp = () => {
                         axios.get("http://localhost:8081/api/usernames/?email=" + value)
                             .then((res) => {
                                 //console.log(res)
-                                if(res.data.email) resolve(false)
+                                if (res.data.email) resolve(false)
                                 else resolve(true)
                             })
                             .catch((error) => {
@@ -90,10 +90,11 @@ const SignUp = () => {
     });
 
     return (
-        <div>
-        {displaySelector == null && <div className="orderViewContainer">
 
-                <h2>Käyttäjän rekisteröinti</h2>
+        <div className="signUp">
+            {displaySelector == null && <div className="">
+
+                <h2>Rekisteröinti</h2>
                 <Formik
                     validationSchema={schema}
 
@@ -109,7 +110,7 @@ const SignUp = () => {
                         postalCode: ''
                     }}
 
-                    onSubmit={(values, { setSubmitting , resetForm}) => {
+                    onSubmit={(values, {setSubmitting, resetForm}) => {
 
                         axios.post('/api/signup/', values)
                             .then(response => {
@@ -138,46 +139,48 @@ const SignUp = () => {
                           resetForm,
                           setFieldValue
                       }) => (
-                        <Form className="" name="vehicleSearch"  noValidate onSubmit={handleSubmit}>
+                        <Form className="" name="vehicleSearch" noValidate onSubmit={handleSubmit}>
                             <Form.Row>
                                 <Form.Label>Tilin tiedot:</Form.Label>
                             </Form.Row>
-                            <Form.Group as={Col} md="5" controlId="formBasicUsername">
-                                <Form.Label>Käyttäjätunnus:</Form.Label>
-                                <Form.Control
-                                    name="userName"
-                                    type="text"
-                                    value={values.userName}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    isValid={touched.userName && !errors.userName}
-                                    isInvalid={!!errors.userName}
-                                />
-                            </Form.Group>
-                            <Form.Group as={Col} md="5" controlId="formBasicEmail">
-                                <Form.Label>Sähköpostiosoite:</Form.Label>
-                                <Form.Control
-                                    name="email"
-                                    type="text"
-                                    value={values.email}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    isValid={touched.email && !errors.email}
-                                    isInvalid={!!errors.email}
-                                />
-                            </Form.Group>
-                            <Form.Group as={Col} md="5" controlId="formBasicPassword">
-                                <Form.Label>Salasana:</Form.Label>
-                                <Form.Control
-                                    name="password"
-                                    type="password"
-                                    value={values.password}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    isValid={touched.password && !errors.password}
-                                    isInvalid={!!errors.password}
-                                />
-                            </Form.Group>
+                            <Form.Row className="mb-3 mt-2">
+                                <Form.Group as={Col} md="5" controlId="formBasicEmail">
+                                    <Form.Label>Sähköpostiosoite:</Form.Label>
+                                    <Form.Control
+                                        name="email"
+                                        type="text"
+                                        value={values.email}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        isValid={touched.email && !errors.email}
+                                        isInvalid={!!errors.email}
+                                    />
+                                </Form.Group>
+                                <Form.Group as={Col} md="5" controlId="formBasicPassword">
+                                    <Form.Label>Salasana:</Form.Label>
+                                    <Form.Control
+                                        name="password"
+                                        type="password"
+                                        value={values.password}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        isValid={touched.password && !errors.password}
+                                        isInvalid={!!errors.password}
+                                    />
+                                </Form.Group>
+                                <Form.Group as={Col} md="5" controlId="formBasicUserName">
+                                    <Form.Label>Käyttäjätunnus:</Form.Label>
+                                    <Form.Control
+                                        name="userName"
+                                        type="text"
+                                        value={values.userName}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        isValid={touched.userName && !errors.userName}
+                                        isInvalid={!!errors.userName}
+                                    />
+                                </Form.Group>
+                            </Form.Row>
                             <Form.Row>
                                 <Form.Label>Käyttäjän henkilötiedot:</Form.Label>
                             </Form.Row>
@@ -262,19 +265,22 @@ const SignUp = () => {
                                     />
                                 </Form.Group>
                             </Form.Row>
-                            <Button type="reset" onClick={resetForm}>Tyhjennä</Button><Button type="submit" disabled={isSubmitting}>Rekisteröydy</Button>
+                            <div id="flexButtons">
+                                <Button type="reset" onClick={resetForm}>Tyhjennä</Button>
+                                <Button type="submit" disabled={isSubmitting}>Rekisteröydy</Button>
+                            </div>
                         </Form>
                     )}
                 </Formik>
             </div>}
 
-    {/* ------------ Tilauksen kuittaus ------------ */}
-    {displaySelector === 'confirm' && <div id="orderConfirmationContainer">
-        <h1>Onnistui</h1>
-        <p>Käyttäjä lisätty onnistuneesti</p>
-        <button onClick={() => history.push('/')}>Pääsivulle</button>
+            {/* ------------ Tilauksen kuittaus ------------ */}
+            {displaySelector === 'confirm' && <div id="orderConfirmationContainer">
+                <h1>Onnistui</h1>
+                <p>Käyttäjä lisätty onnistuneesti</p>
+                <button onClick={() => history.push('/')}>Pääsivulle</button>
 
-    </div>}
+            </div>}
         </div>
     )
 }

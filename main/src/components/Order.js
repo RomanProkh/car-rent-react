@@ -207,7 +207,7 @@ const Order = () => {
                         <h3>{orderParams.orderVehicleModel}</h3>
                         <img src={require("../assets/cars/" + option.Vehicle_src)} alt={option.Vehicle_model}/>
                         <div className="homePageCardDesc">
-                            <p>Starting at <b>24,000$</b></p>
+                            <p>{option.Vehicle_descr}</p>
                             <ul>
                                 <li>
                                     {orderParams.orderVehicleType}

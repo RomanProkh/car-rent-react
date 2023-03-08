@@ -56,7 +56,7 @@ const UserProfile = () => {
 
     if (!user) {
         return (
-            <div>
+            <div className="signInGreetings">
                 Olet kirjauttunut ulos!
                 <button onClick={() => history.push('/SignIn')}>Kirjaudu sisään</button>
                 <button onClick={() => history.push('/')}>Pääsivulle</button>
@@ -64,7 +64,7 @@ const UserProfile = () => {
         )
     }
     return(
-        <div>
+        <div id="centerAlignedTextContainer">
             <h2>Käyttäjän profiili</h2>
                 <div>
                 <p>Käyttäjänimi: {userData.username}</p>
