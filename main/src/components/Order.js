@@ -160,7 +160,6 @@ const Order = () => {
     // Form validation
 
     const yup = require("yup");
-    const formik = useFormik;
         const schema = yup.object().shape({
 
             orderFirstName: Yup.string().required("Lisää etunimi"),
@@ -256,7 +255,6 @@ return (
                 value={values.orderFirstName}
                 onChange={handleChange}
                 onBlur={handleBlur}
-              /*  {formik.touched.orderFirstName && formik.errors.orderFirstName ? <p>{formik.errors.orderFirstName}</p> : null} */
                 isValid={touched.orderFirstName && !errors.orderFirstName}
                 isInvalid={!!errors.orderFirstName}
                 />
@@ -269,7 +267,6 @@ return (
                 value={values.orderLastName}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                /*  {formik.touched.orderLastName && formik.errors.orderLastName ? <p>{formik.errors.orderLastName}</p> : null} */
                   isValid={touched.orderLastName && !errors.orderLastName}
                   isInvalid={!!errors.orderLastName}
                   />
@@ -287,7 +284,6 @@ return (
                   value={values.orderPhoneNumber}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                /*  {formik.touched.orderPhoneNumber && formik.errors.orderPhoneNumber ? <p>{formik.errors.name}</p> : null} */
                   isValid={touched.orderPhoneNumber && !errors.orderPhoneNumber}
                   isInvalid={!!errors.orderPhoneNumber}
                   />
@@ -300,7 +296,6 @@ return (
                   value={values.orderEmail}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                /*  {formik.touched.orderEmail && formik.errors.orderEmail ? <p>{formik.errors.orderEmail}</p> : null} */
                   isValid={touched.orderEmail && !errors.orderEmail}
                   isInvalid={!!errors.orderEmail}
                   />
@@ -315,7 +310,6 @@ return (
                   value={values.orderHomeAddress}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                /*  {formik.touched.orderHomeAddress && formik.errors.orderHomeAddress ? <p>{formik.errors.orderHomeAddress}</p> : null} */
                   isValid={touched.orderHomeAddress && !errors.orderHomeAddress}
                   isInvalid={!!errors.orderHomeAddress}
                   />
@@ -328,7 +322,6 @@ return (
                   value={values.orderCity}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                /*  {formik.touched.orderHomeAddress && formik.errors.orderHomeAddress ? <p>{formik.errors.orderHomeAddress}</p> : null} */
                   isValid={touched.orderCity && !errors.orderCity}
                   isInvalid={!!errors.orderCity}
                   />
@@ -341,7 +334,6 @@ return (
                   value={values.orderPostalCode}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                /*  {formik.touched.orderHomeAddress && formik.errors.orderHomeAddress ? <p>{formik.errors.orderHomeAddress}</p> : null} */
                   isValid={touched.orderPostalCode && !errors.orderPostalCode}
                   isInvalid={!!errors.orderPostalCode}
                   />
