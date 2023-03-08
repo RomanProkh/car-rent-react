@@ -3,8 +3,11 @@ import axios from "axios";
 import Form from 'react-bootstrap/Form';
 import {Col, Row} from "react-bootstrap";
 import {Button} from "react-bootstrap";
-import {Formik} from "formik";
-import * as yup from 'yup';
+import {Formik, useFormik} from "formik";
+import * as Yup from 'yup';
+
+let date = new Date();
+let today = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
 
 const SearchForm = () => {
 
@@ -51,7 +54,13 @@ const SearchForm = () => {
     // }
 
     // Form validation scheme
+
+    const yup = require("yup");
+    const formik = useFormik;
     const schema = yup.object().shape({
+
+        orderStartDate: Yup.date().required("Lisää noutopäivä").min(today),
+        orderEndDate: Yup.date().required("Lisää Palautuspäivä").min(today),
 
         // username: yup.string()
         //     .min(5, 'Must be at least 5 characters')
@@ -163,6 +172,7 @@ const SearchForm = () => {
                         <Form.Group as={Col} md="6" controlId="formBasicOrderStartDate">
                             <Form.Label>Ajoneuvon noutopäivä:</Form.Label>
                             <Form.Control
+                                id="orderStartDate"
                                 name="orderStartDate"
                                 type="date"
                                 value = {values.orderStartDate}
@@ -214,6 +224,7 @@ const SearchForm = () => {
                         <Form.Group as={Col} md="6"  controlId="formBasicOrderEndDate">
                             <Form.Label>Ajoneuvon palautuspäivä:</Form.Label>
                             <Form.Control
+                                id="orderEndDate"
                                 name="orderEndDate"
                                 type="date"
                                 value = {values.orderEndDate}
