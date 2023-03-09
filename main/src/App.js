@@ -42,7 +42,7 @@ const App = () => {
                         <div>
                             {user && <NavLink to="/UserProfile" className="hvr-buzz-out">Profiili</NavLink>}
                             {user && <Button onClick={()=> store.dispatch(logout())}>Kirjaudu ulos</Button>}
-                            {!user && <NavLink to="/SignIn" className="hvr-buzz-out">Kirjaudu sisään</NavLink>}
+                            {!user && <NavLink to="/SignIn" className="hvr-buzz-out">Kirjaudu</NavLink>}
                             {!user && <NavLink to="/SignUp" className="hvr-buzz-out">Rekisteröinti</NavLink>}
                         </div>
                     </nav>

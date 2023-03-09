@@ -106,10 +106,10 @@ const CarResults = () => {
                             <div className="homePageCardDesc">
                                 <p>{option.Vehicle_descr}</p>
                                 <ul id="special">
-                                    <li>
+                                    <li key={option.vehicleId}>
                                         Hinta/tunti <b>{option.Price} €</b>
                                     </li>
-                                    <li>
+                                    <li key={option.vehicleId+1}>
                                         Kokonaishinta <b>{(option.Price * getOrderDuration()).toFixed(2)} €</b>
                                     </li>
                                 </ul>

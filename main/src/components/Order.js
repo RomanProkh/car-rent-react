@@ -65,32 +65,32 @@ const Order = () => {
                         store.dispatch(setOrderVehiclePrice(res.data[0].Price))
                         store.dispatch(setOrderAmount(res.data[0].Price * getOrderDuration()))
 
-                })
-                .catch((err) => console.log(err));
-        }
+                    })
+                    .catch((err) => console.log(err));
+            }
 
             vehicleData(query.vehicleId).catch(console.error)
 
-        // Saving parameters into store
-        //this.checkDates();
+            // Saving parameters into store
+            //this.checkDates();
             store.dispatch(setDisplayOrderNav(true));
-        store.dispatch(setOrderStart(orderStart.toString()))
-        store.dispatch(setOrderEnd(orderEnd.toString()))
-        store.dispatch(setOrderStartDate(query.orderStartDate))
-        store.dispatch(setOrderEndDate(query.orderEndDate))
-        store.dispatch(setOrderStartTime(query.orderStartTime))
-        store.dispatch(setOrderEndTime(query.orderEndTime))
-        store.dispatch(setOrderVehicleId(query.vehicleId))
-        // store.dispatch(setOrderFirstName(query.orderFirstName))
-        // store.dispatch(setOrderLastName(query.orderLastName))
-        // store.dispatch(setOrderEmail(query.orderEmail))
-        // store.dispatch(setOrderPhoneNumber(query.orderPhoneNumber))
-        // store.dispatch(setOrderHomeAddress(query.orderHomeAddress))
-        // store.dispatch(setOrderCity(query.orderCity))
-        // store.dispatch(setOrderPostalCode(query.orderPostalCode))
-        // store.dispatch(setOrderPayment(query.orderPayment))
+            store.dispatch(setOrderStart(orderStart.toString()))
+            store.dispatch(setOrderEnd(orderEnd.toString()))
+            store.dispatch(setOrderStartDate(query.orderStartDate))
+            store.dispatch(setOrderEndDate(query.orderEndDate))
+            store.dispatch(setOrderStartTime(query.orderStartTime))
+            store.dispatch(setOrderEndTime(query.orderEndTime))
+            store.dispatch(setOrderVehicleId(query.vehicleId))
+            // store.dispatch(setOrderFirstName(query.orderFirstName))
+            // store.dispatch(setOrderLastName(query.orderLastName))
+            // store.dispatch(setOrderEmail(query.orderEmail))
+            // store.dispatch(setOrderPhoneNumber(query.orderPhoneNumber))
+            // store.dispatch(setOrderHomeAddress(query.orderHomeAddress))
+            // store.dispatch(setOrderCity(query.orderCity))
+            // store.dispatch(setOrderPostalCode(query.orderPostalCode))
+            // store.dispatch(setOrderPayment(query.orderPayment))
 
-        setUserData(getUserData)
+            setUserData(getUserData)
         }
 
     }, [query.orderStart, query.orderEnd, query.type, query.orderStartDate, query.orderEndDate, query.orderStartTime, query.orderEndTime, query.vehicleId, query.orderStep]);
@@ -189,10 +189,10 @@ const Order = () => {
     const schema = yup.object().shape({})
 
     //Getting user data (of course not the best way to do it, but we will fix it later on)
-    const getUserData = () =>{
-        if(localStorage.getItem('user')===null){
+    const getUserData = () => {
+        if (localStorage.getItem('user') === null) {
             return '';
-        }else{
+        } else {
             return JSON.parse(localStorage.getItem('user'))
         }
     }
@@ -451,7 +451,7 @@ const Order = () => {
                         <p>{orderParams.orderPayment}</p>
                     </div>
                 </div>
-                <button onClick={sendOrder}>Lähetä tilaus</button>
+                <button className="hvr-pulse" onClick={sendOrder}>Lähetä tilaus</button>
             </div>}
             {/* ------------ Tilauksen kuittaus ------------ */}
             {orderParams.orderStep === '5' && <div id="orderConfirmationContainer">
