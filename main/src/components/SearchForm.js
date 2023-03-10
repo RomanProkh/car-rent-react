@@ -208,15 +208,15 @@ const SearchForm = () => {
                                               && isTimeBigger(values.orderStartTime)}>
                                     <option disabled value="">Valitse aika</option>
                                     <option>00:00</option>
-                                    <option>1:00</option>
-                                    <option>2:00</option>
-                                    <option>3:00</option>
-                                    <option>4:00</option>
-                                    <option>5:00</option>
-                                    <option>6:00</option>
-                                    <option>7:00</option>
-                                    <option>8:00</option>
-                                    <option>9:00</option>
+                                    <option>01:00</option>
+                                    <option>02:00</option>
+                                    <option>03:00</option>
+                                    <option>04:00</option>
+                                    <option>05:00</option>
+                                    <option>06:00</option>
+                                    <option>07:00</option>
+                                    <option>08:00</option>
+                                    <option>09:00</option>
                                     <option>10:00</option>
                                     <option>11:00</option>
                                     <option>12:00</option>
@@ -263,15 +263,15 @@ const SearchForm = () => {
                                               || values.orderStartDate > values.orderEndDate && touched.orderEndDate}>
                                     <option disabled value="">Valitse aika</option>
                                     <option>00:00</option>
-                                    <option>1:00</option>
-                                    <option>2:00</option>
-                                    <option>3:00</option>
-                                    <option>4:00</option>
-                                    <option>5:00</option>
-                                    <option>6:00</option>
-                                    <option>7:00</option>
-                                    <option>8:00</option>
-                                    <option>9:00</option>
+                                    <option>01:00</option>
+                                    <option>02:00</option>
+                                    <option>03:00</option>
+                                    <option>04:00</option>
+                                    <option>05:00</option>
+                                    <option>06:00</option>
+                                    <option>07:00</option>
+                                    <option>08:00</option>
+                                    <option>09:00</option>
                                     <option>10:00</option>
                                     <option>11:00</option>
                                     <option>12:00</option>
